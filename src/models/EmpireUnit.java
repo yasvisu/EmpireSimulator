@@ -8,16 +8,18 @@ public abstract class EmpireUnit implements Unit {
 
 	private double precision;
 	private int exponent;
+	private String name;
 	private String flavorText;
 	private int resourceCost;
 	private int unitCost;
 	private int outputProduction;
 	LinkedList<Unit> outputUnits;
 
-	protected EmpireUnit(double precision, int exponent, String flavorText, int resourceCost, int unitCost,
+	protected EmpireUnit(double precision, int exponent,String name, String flavorText, int resourceCost, int unitCost,
 			int outputProduction, Unit... outputUnits) {
 		this.setPrecision(precision);
 		this.setExponent(exponent);
+		this.setName(name);
 		this.setFlavorText(flavorText);
 		this.setResourceCost(resourceCost);
 		this.setUnitCost(unitCost);
@@ -25,6 +27,7 @@ public abstract class EmpireUnit implements Unit {
 		this.setOutputUnits(outputUnits);
 	}
 
+	@Override
 	public double getPrecision() {
 		return precision;
 	}
@@ -36,6 +39,7 @@ public abstract class EmpireUnit implements Unit {
 		this.balancePrecision();
 	}
 
+	@Override
 	public int getExponent() {
 		return exponent;
 	}
@@ -46,6 +50,16 @@ public abstract class EmpireUnit implements Unit {
 		this.exponent = exponent;
 	}
 
+	@Override
+	public String getName() {
+		return this.name;
+	}
+	
+	private void setName(String name){
+		this.name=name;
+	}
+
+	@Override
 	public String getFlavorText() {
 		return flavorText;
 	}
@@ -56,6 +70,7 @@ public abstract class EmpireUnit implements Unit {
 		this.flavorText = flavorText;
 	}
 
+	@Override
 	public int getResourceCost() {
 		return this.resourceCost;
 	}
@@ -66,6 +81,7 @@ public abstract class EmpireUnit implements Unit {
 		this.resourceCost = resourceCost;
 	}
 
+	@Override
 	public int getUnitCost() {
 		return this.unitCost;
 	}
@@ -76,6 +92,7 @@ public abstract class EmpireUnit implements Unit {
 		this.unitCost = unitCost;
 	}
 
+	@Override
 	public int getOutputProduction() {
 		return this.outputProduction;
 	}
@@ -86,6 +103,7 @@ public abstract class EmpireUnit implements Unit {
 		this.outputProduction = outputProduction;
 	}
 
+	@Override
 	public Unit[] getOutputUnits() {
 		return this.outputUnits.toArray(new Unit[this.outputUnits.size()]);
 	}
