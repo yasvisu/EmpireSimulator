@@ -11,6 +11,8 @@ public interface Unit {
 
 	int getOutputProduction();
 
+	String getName();
+	
 	String getFlavorText();
 
 	Unit[] getOutputUnits();
