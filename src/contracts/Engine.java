@@ -3,7 +3,7 @@ package contracts;
 public interface Engine {
 	void update();
 	
-	UnitTree getUnits();
+	UnitTree getUnits(String resourceName);
 
 	boolean peekUpgrade(Unit unit, UpgradeTypes upgradeType);
 
