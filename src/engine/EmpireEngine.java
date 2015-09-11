@@ -14,7 +14,7 @@ public class EmpireEngine implements Engine {
 	}
 
 	@Override
-	public UnitTree getUnits() {
+	public UnitTree getUnits(String resourceName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
