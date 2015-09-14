@@ -54,5 +54,11 @@ public interface Engine {
 	 * @param seconds	the amount of seconds to leap
 	 */
 	void leapSeconds(long seconds);
+	
+	/**
+	 * Returns the current score of the player.
+	 * @return	the score of the player
+	 */
+	long getScore();
 
 }

@@ -68,4 +68,10 @@ public class EmpireEngine implements Engine {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public long getScore() {
+	    // TODO Auto-generated method stub
+	    return 0;
+	}
 }
