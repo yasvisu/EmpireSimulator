@@ -12,6 +12,8 @@ public interface Unit {
 	 */
 	double getPrecision();
 	
+	void setPrecision(double precision);
+	
 	/**
 	 * Gets the exponent of the unit. 
 	 * Combine with precision to get the total quantity of the unit.
@@ -20,12 +22,16 @@ public interface Unit {
 	 */
 	int getExponent();
 
+	void setExponent(int exponent);
+	
 	/**
 	 * Gets the resource cost of buying 1 unit.
 	 * @return	the resource cost
 	 */
 	int getResourceCost();
 
+	void setResourceCost(int cost);
+	
 	/**
 	 * Gets the unit cost of buying 1 unit. 
 	 * Unit costs are the number of output units needed to produce 1 unit of this kind.
@@ -34,6 +40,8 @@ public interface Unit {
 	 */
 	int getUnitCost();
 
+	void setUnitCost(int count);
+	
 	/**
 	 * Gets the output production per second of this unit.
 	 * Output production is of output units.
@@ -42,6 +50,8 @@ public interface Unit {
 	 */
 	int getOutputProduction();
 
+	void setOutputProduction(int count);
+	
 	/**
 	 * Gets the name of the unit.
 	 * @return	the name
@@ -59,11 +69,18 @@ public interface Unit {
 	 * @return	an array of the output units
 	 */
 	Unit[] getOutputUnits();
-	
 
 	/**
 	 * Gets the level of the current unit.
 	 * @return	an integer indicating unit's level.
 	 */
+	@Deprecated
 	int getLevel();
+	
+	int getUpgradeLevel(UpgradeTypes upgradeType);
+	
+	void setUpgradeLevel(UpgradeTypes upgradeType, int level);
+	
+	int getSpawnCount();
+	
 }

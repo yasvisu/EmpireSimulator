@@ -33,6 +33,7 @@ public abstract class EmpireUnit implements Unit {
 		return precision;
 	}
 
+	@Override
 	public void setPrecision(double precision) {
 		// TODO Validate data
 
@@ -45,6 +46,7 @@ public abstract class EmpireUnit implements Unit {
 		return exponent;
 	}
 
+	@Override
 	public void setExponent(int exponent) {
 		// TODO Validate data
 
@@ -76,7 +78,8 @@ public abstract class EmpireUnit implements Unit {
 		return this.resourceCost;
 	}
 
-	private void setResourceCost(int resourceCost) {
+	@Override
+	public void setResourceCost(int resourceCost) {
 		// TODO Validate data
 
 		this.resourceCost = resourceCost;
@@ -87,7 +90,8 @@ public abstract class EmpireUnit implements Unit {
 		return this.unitCost;
 	}
 
-	private void setUnitCost(int unitCost) {
+	@Override
+	public void setUnitCost(int unitCost) {
 		// TODO Validate data
 
 		this.unitCost = unitCost;
@@ -98,7 +102,8 @@ public abstract class EmpireUnit implements Unit {
 		return this.outputProduction;
 	}
 
-	private void setOutputProduction(int outputProduction) {
+	@Override
+	public void setOutputProduction(int outputProduction) {
 		// TODO Validate data
 
 		this.outputProduction = outputProduction;
