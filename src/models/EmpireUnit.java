@@ -13,6 +13,7 @@ public abstract class EmpireUnit implements Unit {
 	private int resourceCost;
 	private int unitCost;
 	private int outputProduction;
+	private int level;
 	LinkedList<Unit> outputUnits;
 
 	protected EmpireUnit(double precision, int exponent,String name, String flavorText, int resourceCost, int unitCost,
@@ -124,6 +125,15 @@ public abstract class EmpireUnit implements Unit {
 		}
 	}
 
+	public int getLevel() {
+		return this.level;
+	}
 
+	public void setLevel(int level) {
+		if (level < 0) {
+			throw new IllegalArgumentException("Level cannot be negative.");
+		}
 
+		this.level = level;
+	}
 }

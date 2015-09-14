@@ -31,7 +31,8 @@ public class EmpireEngine implements Engine {
 	long deltaTSeconds = deltaT / 1000;
 	if (deltaTSeconds > 0) {
 	    /*
-	     * Parse through all trees (or other types of data); update all trees.
+	     * Parse through all trees (or other types of data); update all
+	     * trees.
 	     * 
 	     * Bacon: parse tree from root; increase descendants with output
 	     * quantities. Freedom: parse tree from root; increase only Freedom
@@ -62,6 +63,18 @@ public class EmpireEngine implements Engine {
 	    throw new IllegalArgumentException("Unit to check upgrades for should not be null.");
 	}
 
+	int currentUnitLevel = unit.getLevel();
+	if (upgradeType == UpgradeTypes.OutputUpgrade) {
+	    boolean someCondition = false;
+
+	    return someCondition;
+	} else if (upgradeType == UpgradeTypes.SpawnCountUpgrade) {
+	    boolean otherCondition = false;
+	    return otherCondition;
+	}
+
+	return false;
+
 	/*
 	 * Check whether unit can be upgraded. Use
 	 * Unit.getUpgradeLevel(upgradeType); Use
@@ -70,7 +83,6 @@ public class EmpireEngine implements Engine {
 	 * precision => true else false
 	 */
 
-	return false;
     }
 
     @Override

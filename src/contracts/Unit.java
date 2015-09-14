@@ -61,4 +61,9 @@ public interface Unit {
 	Unit[] getOutputUnits();
 	
 
+	/**
+	 * Gets the level of the current unit.
+	 * @return	an integer indicating unit's level.
+	 */
+	int getLevel();
 }
