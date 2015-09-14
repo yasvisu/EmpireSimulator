@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,12 +24,12 @@ public class EmpireUnitTree implements UnitTree {
 		this.root = root;
 	}
 
-	public Unit[] getAllUnits() {
+	public Iterable<Unit> getAllUnits() {
 		LinkedList<Unit> result = new LinkedList<Unit>();
 
 		this.addDescendantsRecursively(this.root, result);
 
-		return result.toArray(new Unit[result.size()]);
+		return result;
 	}
 
 	private void addDescendantsRecursively(Unit current, List<Unit> list) {
