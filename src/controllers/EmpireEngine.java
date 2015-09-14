@@ -11,9 +11,6 @@ public class EmpireEngine implements Engine {
 	private UnitTree bacon;
 	private UnitTree freedom;
 	private UnitTree democracy;
-	private int baconLevel;
-	private int freedomLevel;
-	private int democracyLevel;
 	private long money;
 
 	public EmpireEngine() {
