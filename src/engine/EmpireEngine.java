@@ -11,6 +11,9 @@ public class EmpireEngine implements Engine {
 	private UnitTree bacon;
 	private UnitTree freedom;
 	private UnitTree democracy;
+	private int baconLevel;
+	private int freedomLevel;
+	private int democracyLevel;
 	private long money;
 
 	public EmpireEngine() {
@@ -40,6 +43,17 @@ public class EmpireEngine implements Engine {
 	public boolean peekUpgrade(Unit unit, UpgradeTypes upgradeType) {
 		if (unit == null) {
 			throw new IllegalArgumentException("Unit to check upgrades for should not be null.");
+		}
+
+
+		int currentUnitLevel = unit.getLevel();
+		if (upgradeType == UpgradeTypes.OutputUpgrade) {
+			boolean someCondition = false;
+			
+			return someCondition;
+		} else if (upgradeType == UpgradeTypes.SpawnCountUpgrade) {
+			boolean otherCondition = false;
+			return otherCondition;
 		}
 
 		return false;
