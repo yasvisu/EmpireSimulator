@@ -4,8 +4,21 @@ import contracts.Engine;
 import contracts.Unit;
 import contracts.UnitTree;
 import contracts.UpgradeTypes;
+import models.EmpireUnitTree;
 
 public class EmpireEngine implements Engine {
+
+	private UnitTree bacon;
+	private UnitTree freedom;
+	private UnitTree democracy;
+	private long money;
+
+	public EmpireEngine() {
+		this.bacon = new EmpireUnitTree();
+		this.freedom = new EmpireUnitTree();
+		this.democracy = new EmpireUnitTree();
+		this.money = 0;
+	}
 
 	@Override
 	public void update() {
@@ -15,13 +28,20 @@ public class EmpireEngine implements Engine {
 
 	@Override
 	public UnitTree getUnits(String resourceName) {
-		// TODO Auto-generated method stub
-		return null;
+		switch (resourceName) {
+			case "bacon": return this.bacon;
+			case "freedom": return this.freedom;
+			case "democracy": return this.democracy;
+			default: throw new IllegalArgumentException("No such resource.");
+		}
 	}
 
 	@Override
 	public boolean peekUpgrade(Unit unit, UpgradeTypes upgradeType) {
-		// TODO Auto-generated method stub
+		if (unit == null) {
+			throw new IllegalArgumentException("Unit to check upgrades for should not be null.");
+		}
+
 		return false;
 	}
 
@@ -48,5 +68,4 @@ public class EmpireEngine implements Engine {
 		// TODO Auto-generated method stub
 
 	}
-
 }
