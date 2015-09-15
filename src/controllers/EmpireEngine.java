@@ -25,12 +25,11 @@ public class EmpireEngine implements Engine {
 
     @Override
     public void update() {
-	// TODO Auto-generated method stub
 
-	long current = System.currentTimeMillis();
-	long deltaT = current - this.elapsedSeconds * 1000;
-	long deltaTSeconds = deltaT / 1000;
-	if (deltaTSeconds > 0) {
+		long current = System.currentTimeMillis();
+		long deltaT = current - this.elapsedSeconds * 1000;
+		long deltaTSeconds = deltaT / 1000;
+		if (deltaTSeconds > 0) {
 	    /*
 	     * Parse through all trees (or other types of data); update all
 	     * trees.
@@ -41,7 +40,31 @@ public class EmpireEngine implements Engine {
 	     * deltaTSeconds Money: do nothing (to be updated by dedicated
 	     * methods for selling / buying)
 	     */
-	}
+			Unit currentBaconNode = this.bacon.getRootUnit();
+			while(this.bacon.getChild(currentBaconNode) != null) {
+				Unit child = this.bacon.getChild(currentBaconNode);
+				HugeInteger increase = currentBaconNode.getOutputProduction();
+				child.setPrecision(child.getPrecision() + increase.getPrecision());
+				child.setExponent(child.getExponent() + increase.getExponent());
+				currentBaconNode = child;
+			}
+
+			Unit currentFreedomNode = this.freedom.getRootUnit();
+			while(this.freedom.getChild(currentFreedomNode) != null) {
+				HugeInteger increase = currentFreedomNode.getOutputProduction();
+				this.getResourceAmount(this.freedom).setPrecision(increase.getPrecision());
+				this.getResourceAmount(this.freedom).setExponent(increase.getExponent());
+				currentFreedomNode = this.freedom.getChild(currentFreedomNode);
+			}
+
+			HugeInteger currentDemocracy = this.getResourceAmount(this.democracy);
+			Unit senator = this.democracy.getRootUnit(); // where is the Senator in the tree?
+			HugeInteger democracyIncrease = new HugeInteger(
+					senator.getOutputProduction().getPrecision() * deltaTSeconds % 10,
+					(int) (senator.getOutputProduction().getExponent() * deltaTSeconds / (deltaTSeconds % 10)));
+			currentDemocracy.setPrecision(currentDemocracy.getPrecision() + democracyIncrease.getPrecision());
+			currentDemocracy.setExponent(currentDemocracy.getExponent() + democracyIncrease.getExponent());
+		}
     }
 
     @Override
