@@ -16,4 +16,5 @@ public interface UnitTree {
 
 	boolean contains(Unit unit);
 
+	Unit getChild(Unit unit);
 }

@@ -82,20 +82,6 @@ public class EmpireEngine implements Engine {
 		return false;
     }
 
-    @Override
-    public boolean upgrade(Unit unit, UpgradeTypes upgradeType) {
-		boolean canUpgrade = this.peekUpgrade(unit, upgradeType);
-		if (canUpgrade) {
-			HugeInteger upgradeCost = unit.calculateUpgradeCost(upgradeType, unit.getUpgradeLevel(upgradeType));
-			unit.setOutputProduction(unit.getOutputProduction() * 2); // value to be edited later
-			if (this.bacon.contains(unit)) {
-				
-			} else if (this.freedom.contains(unit)) {
-
-			} else if (this.democracy.contains(unit)) {
-
-			}
-		}
 	/*
 	 * Use peekUpgrade(unit, upgradeType) to see if an upgrade is possible.
 	 * If true, set output with Unit.setOutput(number), or set spawncount
@@ -104,8 +90,34 @@ public class EmpireEngine implements Engine {
 	 * subtract the costs from the appropriate units. Hint: Get the
 	 * "sacrifice unit" via previous unit.
 	 */
+    @Override
+    public boolean upgrade(Unit unit, UpgradeTypes upgradeType) {
+		boolean canUpgrade = this.peekUpgrade(unit, upgradeType);
+		if (canUpgrade) {
+			HugeInteger upgradeCost = unit.calculateUpgradeCost(upgradeType, unit.getUpgradeLevel(upgradeType));
+			unit.setOutputProduction(unit.getOutputProduction() * 2); // value to be edited later
+			if (this.bacon.contains(unit)) {
+				Unit child = this.bacon.getChild(unit);
+				child.setExponent(child.getExponent() - upgradeCost.getExponent()); // subtract child unit cost
+				child.setPrecision(child.getPrecision() - upgradeCost.getPrecision());
+				unit.setUpgradeLevel(upgradeType, unit.getUpgradeLevel(upgradeType) + 1);
+				return true;
+			} else if (this.freedom.contains(unit)) {
+				Unit child = this.freedom.getChild(unit);
+				child.setExponent(child.getExponent() - upgradeCost.getExponent());
+				child.setPrecision(child.getPrecision() - upgradeCost.getPrecision());
+				unit.setUpgradeLevel(upgradeType, unit.getUpgradeLevel(upgradeType) + 1);
+				return true;
+			} else if (this.democracy.contains(unit)) {
+				Unit child = this.democracy.getChild(unit);
+				child.setExponent(child.getExponent() - upgradeCost.getExponent());
+				child.setPrecision(child.getPrecision() - upgradeCost.getPrecision());
+				unit.setUpgradeLevel(upgradeType, unit.getUpgradeLevel(upgradeType) + 1);
+				return true;
+			}
+		}
 
-	return false;
+		return false;
     }
 
     @Override

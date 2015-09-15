@@ -1,5 +1,4 @@
 package models;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import contracts.Unit;
@@ -32,7 +31,6 @@ public class EmpireUnitTree implements UnitTree {
 	@Override
 	public boolean contains(Unit unit) {
 		Iterable<Unit> units = this.getAllUnits();
-		boolean isPresent = false;
 		for (Unit unit1 : units) {
 			if (unit1.equals(unit)) {
 				return true;
@@ -40,6 +38,21 @@ public class EmpireUnitTree implements UnitTree {
 		}
 
 		return false;
+	}
+
+	@Override
+	public Unit getChild(Unit unit) {
+		Iterable<Unit> units = this.getAllUnits();
+		Unit child = null;
+		for (Unit unit1 : units) {
+			if (unit1.equals(unit)) {
+				return child;
+			}
+
+			child = unit1;
+		}
+
+		return child;
 	}
 
 	private void addDescendantsRecursively(Unit current, List<Unit> list) {
