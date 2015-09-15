@@ -95,7 +95,8 @@ public class EmpireEngine implements Engine {
 		boolean canUpgrade = this.peekUpgrade(unit, upgradeType);
 		if (canUpgrade) {
 			HugeInteger upgradeCost = unit.calculateUpgradeCost(upgradeType, unit.getUpgradeLevel(upgradeType));
-			unit.setOutputProduction(unit.getOutputProduction() * 2); // value to be edited later
+			// value to be edited later
+			unit.setOutputProduction(new HugeInteger(unit.getOutputProduction().getPrecision() * 2, unit.getExponent()));
 			if (this.bacon.contains(unit)) {
 				Unit child = this.bacon.getChild(unit);
 				child.setExponent(child.getExponent() - upgradeCost.getExponent()); // subtract child unit cost
@@ -120,18 +121,43 @@ public class EmpireEngine implements Engine {
 		return false;
     }
 
-    @Override
-    public boolean peekBuyUnits(Unit unit, int count) {
-	// TODO Auto-generated method stub
-
 	/*
 	 * Calculate unit cost with count * Unit.getUnitCost() and count *
 	 * Unit.getResourceCost(). If there are resources and enough units,
 	 * return true. Hint: Get the "sacrifice unit" via Unit.getOutputUnits()
 	 * else false
 	 */
+    @Override
+    public boolean peekBuyUnits(Unit unit, HugeInteger count) {
+		HugeInteger totalUnitCost = new HugeInteger(unit.getUnitCost().getPrecision() * count.getPrecision(),
+			unit.getExponent() + count.getExponent());
+		HugeInteger totalResourceCost = new HugeInteger(unit.getResourceCost().getPrecision() * count.getPrecision(),
+			unit.getExponent() + count.getExponent());
 
-	return false;
+		if (this.bacon.contains(unit)) {
+			Unit child = this.bacon.getChild(unit);
+			HugeInteger totalChildAmount = new HugeInteger(child.getPrecision(), child.getExponent());
+			if (totalChildAmount.compareTo(totalUnitCost) >= 0 &&
+					this.getResourceAmount(this.bacon).compareTo(totalResourceCost) >= 0) {
+				return true;
+			}
+		} else if (this.freedom.contains(unit)) {
+			Unit child = this.freedom.getChild(unit);
+			HugeInteger totalChildAmount = new HugeInteger(child.getPrecision(), child.getExponent());
+			if (totalChildAmount.compareTo(totalUnitCost) >= 0 &&
+					this.getResourceAmount(this.freedom).compareTo(totalResourceCost) >= 0) {
+				return true;
+			}
+		} else if (this.democracy.contains(unit)) {
+			Unit child = this.democracy.getChild(unit);
+			HugeInteger totalChildAmount = new HugeInteger(child.getPrecision(), child.getExponent());
+			if (totalChildAmount.compareTo(totalUnitCost) >= 0 &&
+					this.getResourceAmount(this.democracy).compareTo(totalResourceCost) >= 0) {
+				return true;
+			}
+		}
+
+		return false;
     }
 
     @Override
@@ -176,4 +202,30 @@ public class EmpireEngine implements Engine {
 	 */
 	return 0;
     }
+
+	private HugeInteger getResourceAmount(UnitTree tree) {
+		HugeInteger resourceAmount = new HugeInteger(0, 0);
+		Unit child = tree.getRootUnit();
+		do {
+			if (tree.getChild(child) != null) {
+				child = tree.getChild(child);
+			} else {
+				resourceAmount.setExponent(child.getExponent());
+				resourceAmount.setPrecision(child.getPrecision());
+				return resourceAmount;
+			}
+		} while(true);
+	}
+
+	private void setResourceAmount(UnitTree tree, HugeInteger amount) {
+		Unit child = tree.getRootUnit();
+		do {
+			if (tree.getChild(child) != null) {
+				child = tree.getChild(child);
+			} else {
+				child.setPrecision(amount.getPrecision());
+				child.setExponent(amount.getExponent());
+			}
+		} while(true);
+	}
 }

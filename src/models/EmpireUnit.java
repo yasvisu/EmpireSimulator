@@ -11,14 +11,15 @@ public abstract class EmpireUnit implements Unit {
 	private int exponent;
 	private String name;
 	private String flavorText;
-	private int resourceCost;
-	private int unitCost;
-	private int outputProduction;
+	private HugeInteger resourceCost;
+	private HugeInteger unitCost;
+	private HugeInteger outputProduction;
 	private int level;
 	LinkedList<Unit> outputUnits;
 
-	protected EmpireUnit(double precision, int exponent,String name, String flavorText, int resourceCost, int unitCost,
-			int outputProduction, Unit... outputUnits) {
+	protected EmpireUnit(double precision, int exponent,String name, String flavorText,
+						 HugeInteger resourceCost, HugeInteger unitCost,
+						 HugeInteger outputProduction, Unit... outputUnits) {
 		this.setPrecision(precision);
 		this.setExponent(exponent);
 		this.setName(name);
@@ -75,36 +76,36 @@ public abstract class EmpireUnit implements Unit {
 	}
 
 	@Override
-	public int getResourceCost() {
+	public HugeInteger getResourceCost() {
 		return this.resourceCost;
 	}
 
 	@Override
-	public void setResourceCost(int resourceCost) {
+	public void setResourceCost(HugeInteger resourceCost) {
 		// TODO Validate data
 
 		this.resourceCost = resourceCost;
 	}
 
 	@Override
-	public int getUnitCost() {
+	public HugeInteger getUnitCost() {
 		return this.unitCost;
 	}
 
 	@Override
-	public void setUnitCost(int unitCost) {
+	public void setUnitCost(HugeInteger unitCost) {
 		// TODO Validate data
 
 		this.unitCost = unitCost;
 	}
 
 	@Override
-	public int getOutputProduction() {
+	public HugeInteger getOutputProduction() {
 		return this.outputProduction;
 	}
 
 	@Override
-	public void setOutputProduction(int outputProduction) {
+	public void setOutputProduction(HugeInteger outputProduction) {
 		// TODO Validate data
 
 		this.outputProduction = outputProduction;

@@ -30,9 +30,9 @@ public interface Unit {
 	 * Gets the resource cost of buying 1 unit.
 	 * @return	the resource cost
 	 */
-	int getResourceCost();
+	HugeInteger getResourceCost();
 
-	void setResourceCost(int cost);
+	void setResourceCost(HugeInteger cost);
 	
 	/**
 	 * Gets the unit cost of buying 1 unit. 
@@ -40,9 +40,9 @@ public interface Unit {
 	 * @return	the unit cost
 	 * @see #getOutputUnits()
 	 */
-	int getUnitCost();
+	HugeInteger getUnitCost();
 
-	void setUnitCost(int count);
+	void setUnitCost(HugeInteger count);
 	
 	/**
 	 * Gets the output production per second of this unit.
@@ -50,9 +50,9 @@ public interface Unit {
 	 * @return	the output production
 	 * @see #getOutputUnits()
 	 */
-	int getOutputProduction();
+	HugeInteger getOutputProduction();
 
-	void setOutputProduction(int count);
+	void setOutputProduction(HugeInteger count);
 	
 	/**
 	 * Gets the name of the unit.
