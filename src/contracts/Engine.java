@@ -49,7 +49,7 @@ public interface Engine {
 	 * @param count	the amount to increase the unit by
 	 * @return		whether any units were bought
 	 */
-	boolean buyUnits(Unit unit, int count);
+	boolean buyUnits(Unit unit, HugeInteger count);
 
 	/**
 	 * Leaps the engine by the given amount in seconds.

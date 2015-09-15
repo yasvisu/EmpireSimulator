@@ -122,17 +122,19 @@ public class EmpireEngine implements Engine {
     }
 
 	/*
-	 * Calculate unit cost with count * Unit.getUnitCost() and count *
-	 * Unit.getResourceCost(). If there are resources and enough units,
-	 * return true. Hint: Get the "sacrifice unit" via Unit.getOutputUnits()
-	 * else false
+	 * Use peekBuyUnits(unit, count) to see if an purchase is possible. If
+	 * true, calculate # of new Units via count * Unit.getSpawnCount(). Then
+	 * modify the precision and exponent. Use
+	 * this.calculateUpgradeCost(upgradeType, level) to get the costs, then
+	 * subtract the costs from the appropriate units. Hint: Get the
+	 * "sacrifice unit" via previous unit.
 	 */
     @Override
     public boolean peekBuyUnits(Unit unit, HugeInteger count) {
 		HugeInteger totalUnitCost = new HugeInteger(unit.getUnitCost().getPrecision() * count.getPrecision(),
-			unit.getExponent() + count.getExponent());
+			unit.getExponent() * count.getExponent());
 		HugeInteger totalResourceCost = new HugeInteger(unit.getResourceCost().getPrecision() * count.getPrecision(),
-			unit.getExponent() + count.getExponent());
+			unit.getExponent() * count.getExponent());
 
 		if (this.bacon.contains(unit)) {
 			Unit child = this.bacon.getChild(unit);
@@ -160,20 +162,36 @@ public class EmpireEngine implements Engine {
 		return false;
     }
 
+
     @Override
-    public boolean buyUnits(Unit unit, int count) {
-	// TODO Auto-generated method stub
+    public boolean buyUnits(Unit unit, HugeInteger count) {
+		if (this.peekBuyUnits(unit, count)) {
+			HugeInteger totalCost = new HugeInteger(unit.getPrecision() * count.getPrecision(),
+					unit.getExponent() * count.getExponent());
+			if (this.bacon.contains(unit)) {
+				HugeInteger newAmount = new HugeInteger(
+						this.getResourceAmount(this.bacon).getPrecision() - totalCost.getPrecision(),
+						this.getResourceAmount(this.bacon).getExponent() - count.getExponent());
+				this.setResourceAmount(this.bacon, newAmount);
+			} else if (this.freedom.contains(unit)) {
+				HugeInteger newAmount = new HugeInteger(
+						this.getResourceAmount(this.freedom).getPrecision() - totalCost.getPrecision(),
+						this.getResourceAmount(this.freedom).getExponent() - count.getExponent());
+				this.setResourceAmount(this.freedom, newAmount);
+			} else if (this.democracy.contains(unit)) {
+				HugeInteger newAmount = new HugeInteger(
+						this.getResourceAmount(this.democracy).getPrecision() - totalCost.getPrecision(),
+						this.getResourceAmount(this.democracy).getExponent() - count.getExponent());
+				this.setResourceAmount(this.democracy, newAmount);
+			}
 
-	/*
-	 * Use peekBuyUnits(unit, count) to see if an purchase is possible. If
-	 * true, calculate # of new Units via count * Unit.getSpawnCount(). Then
-	 * modify the precision and exponent. Use
-	 * this.calculateUpgradeCost(upgradeType, level) to get the costs, then
-	 * subtract the costs from the appropriate units. Hint: Get the
-	 * "sacrifice unit" via previous unit.
-	 */
+			unit.getUnitCost();
+			unit.setPrecision(unit.getPrecision() + count.getPrecision());
+			unit.setExponent(unit.getExponent() + count.getExponent());
+			return true;
+		}
 
-	return false;
+		return false;
     }
 
     @Override
