@@ -7,21 +7,19 @@ import contracts.UpgradeTypes;
 import models.EmpireUnitTree;
 import models.HugeInteger;
 
-import java.util.Arrays;
-
 public class EmpireEngine implements Engine {
 
     private UnitTree bacon;
     private UnitTree freedom;
     private UnitTree democracy;
-    private long money;
+    private long moolah;
     private long elapsedSeconds;
 
     public EmpireEngine() {
 		this.bacon = new EmpireUnitTree();
 		this.freedom = new EmpireUnitTree();
 		this.democracy = new EmpireUnitTree();
-		this.money = 0;
+		this.moolah = 0;
 		this.elapsedSeconds = 0;
     }
 
@@ -212,31 +210,36 @@ public class EmpireEngine implements Engine {
 		return false;
     }
 
-    @Override
-    public void leapSeconds(long seconds) {
-	// TODO Auto-generated method stub
 	/*
 	 * Leap the engine by a certain amount of seconds:
-	 * 
-	 * 1. DEcrease this.elapsedSeconds by the amount of seconds
-	 * 
+	 *
+	 * 1. Decrease this.elapsedSeconds by the amount of seconds
+	 *
 	 * 2. this.update();
-	 * 
+	 *
 	 */
+    @Override
+    public void leapSeconds(long seconds) {
+		this.elapsedSeconds -= seconds;
+		this.update();
     }
 
-    @Override
-    public long getScore() {
-	// TODO Auto-generated method stub
 	/*
 	 * Calculate the score of the player, based on:
-	 * 
+	 *
 	 * - Resources - Units - Upgrades
-	 * 
+	 *
 	 * (you decide how to weigh each)
-	 * 
+	 *
 	 */
-	return 0;
+    @Override
+    public long getScore() {
+		long score = 0;
+		score += Math.sqrt(this.moolah); // to be balanced once game is working
+		score += Math.sqrt(this.getResourceAmount(this.bacon).getExponent());
+		score += Math.sqrt(this.getResourceAmount(this.democracy).getExponent());
+		score += Math.sqrt(this.getResourceAmount(this.freedom).getExponent());
+		return score;
     }
 
 	private HugeInteger getResourceAmount(UnitTree tree) {
