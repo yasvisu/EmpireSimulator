@@ -12,4 +12,8 @@ public interface UnitTree {
 	 */
 	Unit getRootUnit();
 
+	Iterable<Unit> getAllUnits();
+
+	boolean contains(Unit unit);
+
 }

@@ -7,6 +7,8 @@ import contracts.UpgradeTypes;
 import models.EmpireUnitTree;
 import models.HugeInteger;
 
+import java.util.Arrays;
+
 public class EmpireEngine implements Engine {
 
     private UnitTree bacon;
@@ -16,11 +18,11 @@ public class EmpireEngine implements Engine {
     private long elapsedSeconds;
 
     public EmpireEngine() {
-	this.bacon = new EmpireUnitTree();
-	this.freedom = new EmpireUnitTree();
-	this.democracy = new EmpireUnitTree();
-	this.money = 0;
-	this.elapsedSeconds = 0;
+		this.bacon = new EmpireUnitTree();
+		this.freedom = new EmpireUnitTree();
+		this.democracy = new EmpireUnitTree();
+		this.money = 0;
+		this.elapsedSeconds = 0;
     }
 
     @Override
@@ -82,8 +84,18 @@ public class EmpireEngine implements Engine {
 
     @Override
     public boolean upgrade(Unit unit, UpgradeTypes upgradeType) {
-	// TODO Auto-generated method stub
+		boolean canUpgrade = this.peekUpgrade(unit, upgradeType);
+		if (canUpgrade) {
+			HugeInteger upgradeCost = unit.calculateUpgradeCost(upgradeType, unit.getUpgradeLevel(upgradeType));
+			unit.setOutputProduction(unit.getOutputProduction() * 2); // value to be edited later
+			if (this.bacon.contains(unit)) {
+				
+			} else if (this.freedom.contains(unit)) {
 
+			} else if (this.democracy.contains(unit)) {
+
+			}
+		}
 	/*
 	 * Use peekUpgrade(unit, upgradeType) to see if an upgrade is possible.
 	 * If true, set output with Unit.setOutput(number), or set spawncount
