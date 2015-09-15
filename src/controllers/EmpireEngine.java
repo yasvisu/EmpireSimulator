@@ -168,24 +168,42 @@ public class EmpireEngine implements Engine {
 		if (this.peekBuyUnits(unit, count)) {
 			HugeInteger totalCost = new HugeInteger(unit.getPrecision() * count.getPrecision(),
 					unit.getExponent() * count.getExponent());
+
 			if (this.bacon.contains(unit)) {
-				HugeInteger newAmount = new HugeInteger(
+				HugeInteger newResourceAmount = new HugeInteger(
 						this.getResourceAmount(this.bacon).getPrecision() - totalCost.getPrecision(),
 						this.getResourceAmount(this.bacon).getExponent() - count.getExponent());
-				this.setResourceAmount(this.bacon, newAmount);
+				this.setResourceAmount(this.bacon, newResourceAmount);
+
+				HugeInteger newChildAmount = new HugeInteger(
+						this.getResourceAmount(this.bacon).getPrecision() - unit.getUnitCost().getPrecision(),
+						this.getResourceAmount(this.bacon).getExponent() - unit.getUnitCost().getExponent());
+				this.bacon.getChild(unit).setPrecision(newChildAmount.getPrecision());
+				this.bacon.getChild(unit).setExponent(newChildAmount.getExponent());
 			} else if (this.freedom.contains(unit)) {
-				HugeInteger newAmount = new HugeInteger(
+				HugeInteger newResourceAmount = new HugeInteger(
 						this.getResourceAmount(this.freedom).getPrecision() - totalCost.getPrecision(),
 						this.getResourceAmount(this.freedom).getExponent() - count.getExponent());
-				this.setResourceAmount(this.freedom, newAmount);
+				this.setResourceAmount(this.freedom, newResourceAmount);
+
+				HugeInteger newChildAmount = new HugeInteger(
+						this.getResourceAmount(this.freedom).getPrecision() - unit.getUnitCost().getPrecision(),
+						this.getResourceAmount(this.freedom).getExponent() - unit.getUnitCost().getExponent());
+				this.freedom.getChild(unit).setPrecision(newChildAmount.getPrecision());
+				this.freedom.getChild(unit).setExponent(newChildAmount.getExponent());
 			} else if (this.democracy.contains(unit)) {
-				HugeInteger newAmount = new HugeInteger(
+				HugeInteger newResourceAmount = new HugeInteger(
 						this.getResourceAmount(this.democracy).getPrecision() - totalCost.getPrecision(),
 						this.getResourceAmount(this.democracy).getExponent() - count.getExponent());
-				this.setResourceAmount(this.democracy, newAmount);
+				this.setResourceAmount(this.democracy, newResourceAmount);
+
+				HugeInteger newChildAmount = new HugeInteger(
+						this.getResourceAmount(this.democracy).getPrecision() - unit.getUnitCost().getPrecision(),
+						this.getResourceAmount(this.democracy).getExponent() - unit.getUnitCost().getExponent());
+				this.democracy.getChild(unit).setPrecision(newChildAmount.getPrecision());
+				this.democracy.getChild(unit).setExponent(newChildAmount.getExponent());
 			}
 
-			unit.getUnitCost();
 			unit.setPrecision(unit.getPrecision() + count.getPrecision());
 			unit.setExponent(unit.getExponent() + count.getExponent());
 			return true;
