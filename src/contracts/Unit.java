@@ -1,5 +1,7 @@
 package contracts;
 
+import models.HugeInteger;
+
 /**
  * Defines methods for accessing and manipulating a Unit.
  */
@@ -82,5 +84,7 @@ public interface Unit {
 	void setUpgradeLevel(UpgradeTypes upgradeType, int level);
 	
 	int getSpawnCount();
+
+	HugeInteger calculateUpgradeCost(UpgradeTypes upgradeType, int level);
 	
 }

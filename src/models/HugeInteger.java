@@ -5,8 +5,8 @@ public class HugeInteger {
     private int exponent;
 
     public HugeInteger(double precision, int exponent) {
-	this.setPrecision(precision);
-	this.setExponent(exponent);
+		this.setPrecision(precision);
+		this.setExponent(exponent);
     }
 
     public double getPrecision() {
@@ -22,9 +22,10 @@ public class HugeInteger {
     }
 
     public void setExponent(int exponent) {
-	if (exponent < 0) {
-	    throw new IllegalArgumentException("Exponent cannot be negative.");
-	}
+		if (exponent < 0) {
+			throw new IllegalArgumentException("Exponent cannot be negative.");
+		}
+
 	this.exponent = exponent;
     }
 
@@ -33,10 +34,12 @@ public class HugeInteger {
 	    if (this.getPrecision() == other.getPrecision()) {
 		return 0;
 	    }
+
 	    if (this.getPrecision() > other.getPrecision()) {
 		return 1;
 	    }
 	}
+
 	if (this.getExponent() > other.getExponent())
 	    return 1;
 	return -1;

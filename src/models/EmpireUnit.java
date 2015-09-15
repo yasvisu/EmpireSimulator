@@ -3,6 +3,7 @@ package models;
 import java.util.LinkedList;
 
 import contracts.Unit;
+import contracts.UpgradeTypes;
 
 public abstract class EmpireUnit implements Unit {
 
@@ -140,5 +141,17 @@ public abstract class EmpireUnit implements Unit {
 		}
 
 		this.level = level;
+	}
+
+	@Override
+	public HugeInteger calculateUpgradeCost(UpgradeTypes upgradeType, int level) {
+		switch (upgradeType) {
+			case OutputUpgrade:
+				return new HugeInteger(1, 2 * level); // random value, to be edited later
+			case SpawnCountUpgrade:
+				return new HugeInteger(2, 2 * level); // random value, to be edited later
+			default:
+				throw new IllegalArgumentException("No such upgrade type.");
+		}
 	}
 }

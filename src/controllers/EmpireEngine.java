@@ -5,6 +5,7 @@ import contracts.Unit;
 import contracts.UnitTree;
 import contracts.UpgradeTypes;
 import models.EmpireUnitTree;
+import models.HugeInteger;
 
 public class EmpireEngine implements Engine {
 
@@ -46,34 +47,16 @@ public class EmpireEngine implements Engine {
     @Override
     public UnitTree getUnits(String resourceName) {
 	switch (resourceName) {
-	case "bacon":
-	    return this.bacon;
-	case "freedom":
-	    return this.freedom;
-	case "democracy":
-	    return this.democracy;
-	default:
-	    throw new IllegalArgumentException("No such resource.");
-	}
+		case "bacon":
+			return this.bacon;
+		case "freedom":
+			return this.freedom;
+		case "democracy":
+			return this.democracy;
+		default:
+			throw new IllegalArgumentException("No such resource.");
+		}
     }
-
-    @Override
-    public boolean peekUpgrade(Unit unit, UpgradeTypes upgradeType) {
-	if (unit == null) {
-	    throw new IllegalArgumentException("Unit to check upgrades for should not be null.");
-	}
-
-	int currentUnitLevel = unit.getLevel();
-	if (upgradeType == UpgradeTypes.OutputUpgrade) {
-	    boolean someCondition = false;
-
-	    return someCondition;
-	} else if (upgradeType == UpgradeTypes.SpawnCountUpgrade) {
-	    boolean otherCondition = false;
-	    return otherCondition;
-	}
-
-	return false;
 
 	/*
 	 * Check whether unit can be upgraded. Use
@@ -82,7 +65,19 @@ public class EmpireEngine implements Engine {
 	 * Unit.getExponent()== cost exponent AND Unit.getPrecision() > cost
 	 * precision => true else false
 	 */
+    @Override
+    public boolean peekUpgrade(Unit unit, UpgradeTypes upgradeType) {
+		if (unit == null) {
+			throw new IllegalArgumentException("Unit to check upgrades for should not be null.");
+		}
 
+		int upgradeLevel = unit.getUpgradeLevel(upgradeType);
+		HugeInteger upgradeCost = unit.calculateUpgradeCost(upgradeType, upgradeLevel + 1);
+		if (unit.getExponent() >= upgradeCost.getExponent() && unit.getPrecision() > upgradeCost.getPrecision()) {
+			return true;
+		}
+
+		return false;
     }
 
     @Override
