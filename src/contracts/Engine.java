@@ -1,5 +1,7 @@
 package contracts;
 
+import models.HugeInteger;
+
 /**
  * Defines methods for accessing and manipulating an Engine.
  */
@@ -39,7 +41,7 @@ public interface Engine {
 	 * @param count	the amount to check
 	 * @return		whether any units can be bought
 	 */
-	boolean peekBuyUnits(Unit unit, int count);
+	boolean peekBuyUnits(Unit unit, HugeInteger count);
 
 	/**
 	 * Increases the count of a certain unit.
@@ -47,7 +49,7 @@ public interface Engine {
 	 * @param count	the amount to increase the unit by
 	 * @return		whether any units were bought
 	 */
-	boolean buyUnits(Unit unit, int count);
+	boolean buyUnits(Unit unit, HugeInteger count);
 
 	/**
 	 * Leaps the engine by the given amount in seconds.
