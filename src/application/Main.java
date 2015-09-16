@@ -1,9 +1,8 @@
 package application;
 	
-import UI.BattlesBox;
+import UI.BattlesSimulator;
 import javafx.application.Application;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -15,7 +14,7 @@ public class Main extends Application {
 		try {
 			BorderPane root = new BorderPane();
 			Button battleButtonSample = new Button("Go to battle box");
-			battleButtonSample.setOnAction(e -> BattlesBox.display());
+			battleButtonSample.setOnAction(e -> BattlesSimulator.display());
 
 			root.setCenter(battleButtonSample);
 

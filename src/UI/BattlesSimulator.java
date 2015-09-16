@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import utils.Constants;
 
 
-public class BattlesBox {
+public class BattlesSimulator {
 
     public static void display(){
         Stage window = new Stage();
@@ -18,18 +18,25 @@ public class BattlesBox {
         window.setWidth(Constants.BATTLE_WINDOW_WIDTH);
         window.setHeight(Constants.BATTLE_WINDOW_HEIGHT);
 
-        //TODO: implement battles
         final ImageView background = new ImageView(Constants.BACKGROUND_IMAGE);
 
         final ImageView playerPlanet = new ImageView(Constants.PLAYER_PLANET_IMAGE);
         setWidthAndHeight(playerPlanet, Constants.PLAYER_PLANET_WIDTH, Constants.PLAYER_PLANET_HEIGHT);
         setVector(playerPlanet, Constants.PLAYER_PLANET_X, Constants.PLAYER_PLANET_Y);
 
-        final ImageView enemyPlanet = new ImageView(Constants.ENEMY_ONE_PLANET_IMAGE);
-        setWidthAndHeight(enemyPlanet, Constants.ENEMY_ONE_PLANET_WIDTH, Constants.ENEMY_ONE_PLANET_HEIGHT);
-        setVector(enemyPlanet, Constants.ENEMY_ONE_PLANET_X, Constants.ENEMY_ONE_PLANET_Y);
+        final ImageView enemyVarmalusPlanet = new ImageView(Constants.ENEMY_VARMALUS_PLANET_IMAGE);
+        setWidthAndHeight(enemyVarmalusPlanet, Constants.ENEMY_VARMALUS_PLANET_WIDTH, Constants.ENEMY_VARMALUS_PLANET_HEIGHT);
+        setVector(enemyVarmalusPlanet, Constants.ENEMY_VARMALUS_PLANET_X, Constants.ENEMY_VARMALUS_PLANET_Y);
 
-        final Group foreground = new Group(playerPlanet, enemyPlanet);
+        final ImageView enemySlekonPlanet = new ImageView(Constants.ENEMY_SLEKON_PLANET_IMAGE);
+        setWidthAndHeight(enemySlekonPlanet, Constants.ENEMY_SLEKON_PLANET_WIDTH, Constants.ENEMY_SLEKON_PLANET_HEIGHT);
+        setVector(enemySlekonPlanet, Constants.ENEMY_SLEKON_PLANET_X, Constants.ENEMY_SLEKON_PLANET_Y);
+
+        final ImageView enemyZakrosPlanet = new ImageView(Constants.ENEMY_ZAKROS_PLANET_IMAGE);
+        setWidthAndHeight(enemyZakrosPlanet, Constants.ENEMY_ZAKROS_PLANET_WIDTH, Constants.ENEMY_ZAKROS_PLANET_HEIGHT);
+        setVector(enemyZakrosPlanet, Constants.ENEMY_ZAKROS_PLANET_X, Constants.ENEMY_ZAKROS_PLANET_Y);
+
+        final Group foreground = new Group(playerPlanet, enemyVarmalusPlanet, enemySlekonPlanet, enemyZakrosPlanet);
         foreground.setEffect(new DropShadow());
         final Group root = new Group(background, foreground);
 
