@@ -35,4 +35,10 @@ public class Constants {
     public static final double ENEMY_ZAKROS_PLANET_WIDTH = 120;
     public static final double ENEMY_ZAKROS_PLANET_X = 570;
     public static final double ENEMY_ZAKROS_PLANET_Y = 155;
+
+    public static final Image ENEMY_NURUTA_PLANET_IMAGE = new Image(BattlesSimulator.class.getResource("images/planet5.png").toString());
+    public static final double ENEMY_NURUTA_PLANET_HEIGHT = 120;
+    public static final double ENEMY_NURUTA_PLANET_WIDTH = 120;
+    public static final double ENEMY_NURUTA_PLANET_X = 200;
+    public static final double ENEMY_NURUTA_PLANET_Y = 445;
 }
