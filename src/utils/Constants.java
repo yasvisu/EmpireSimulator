@@ -5,12 +5,10 @@ import javafx.scene.image.Image;
 
 public class Constants {
     public static final String WINDOW_TITLE = "Battle mode";
-    public static final double BATTLE_WINDOW_WIDTH = 800;
-    public static final double BATTLE_WINDOW_HEIGHT = 600;
+    public static final int BATTLE_WINDOW_WIDTH = 800;
+    public static final int BATTLE_WINDOW_HEIGHT = 600;
 
     public static final Image BACKGROUND_IMAGE = new Image(BattlesSimulator.class.getResource("images/background.jpg").toString());
-
-    public static final Image ENEMY_FIVE_PLANET_IMAGE = new Image(BattlesSimulator.class.getResource("images/planet5.png").toString());
 
     public static final Image PLAYER_PLANET_IMAGE = new Image(BattlesSimulator.class.getResource("images/planet3.png").toString());
     public static final double PLAYER_PLANET_HEIGHT = 70;
@@ -41,4 +39,10 @@ public class Constants {
     public static final double ENEMY_NURUTA_PLANET_WIDTH = 120;
     public static final double ENEMY_NURUTA_PLANET_X = 200;
     public static final double ENEMY_NURUTA_PLANET_Y = 445;
+
+    public static final Image MISSILE_IMAGE = new Image(BattlesSimulator.class.getResource("images/missile.png").toString());
+    public static final double MISSILE_HEIGHT = 70;
+    public static final double MISSILE_WIDTH = 70;
+    public static final double MISSILE_X = 125;
+    public static final double MISSILE_Y = 190;
 }
