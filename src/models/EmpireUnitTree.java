@@ -55,7 +55,7 @@ public class EmpireUnitTree implements UnitTree {
 		return child;
 	}
 
-	private void addDescendantsRecursively(Unit current, List<Unit> list) {
+	public void addDescendantsRecursively(Unit current, List<Unit> list) {
 		if (current == null) {
 			return;
 		}
