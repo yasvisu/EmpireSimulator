@@ -4,8 +4,10 @@ import contracts.Engine;
 import contracts.Unit;
 import contracts.UnitTree;
 import contracts.UpgradeTypes;
+import models.EmpireUnit;
 import models.EmpireUnitTree;
 import models.HugeInteger;
+import java.util.ArrayList;
 
 public class EmpireEngine implements Engine {
 
@@ -183,7 +185,6 @@ public class EmpireEngine implements Engine {
 		return false;
     }
 
-
     @Override
     public boolean buyUnits(Unit unit, HugeInteger count) {
 		if (this.peekBuyUnits(unit, count)) {
@@ -263,6 +264,48 @@ public class EmpireEngine implements Engine {
 		score += Math.sqrt(this.getResourceAmount(this.democracy).getExponent());
 		score += Math.sqrt(this.getResourceAmount(this.freedom).getExponent());
 		return score;
+    }
+
+    public void initialize() {
+        Unit bacon = new EmpireUnit(40, 1, "Bacon", "bacon flavor text",
+                new HugeInteger(0, 0), new HugeInteger(0, 0), new HugeInteger(0, 0)) {
+            @Override
+            public int getUpgradeLevel(UpgradeTypes upgradeType) {
+                return 0;
+            }
+
+            @Override
+            public void setUpgradeLevel(UpgradeTypes upgradeType, int level) {
+
+            }
+
+            @Override
+            public int getSpawnCount() {
+                return 0;
+            }
+        };
+        this.bacon.addDescendantsRecursively(bacon, new ArrayList<>());
+
+        Unit soldier = new EmpireUnit(10, 1, "Soldier", "soldier flavor text",
+                new HugeInteger(10, 0), new HugeInteger(0, 0), new HugeInteger(0, 0)) {
+            @Override
+            public int getUpgradeLevel(UpgradeTypes upgradeType) {
+                return 0;
+            }
+
+            @Override
+            public void setUpgradeLevel(UpgradeTypes upgradeType, int level) {
+
+            }
+
+            @Override
+            public int getSpawnCount() {
+                return 0;
+            }
+        };
+        this.democracy.addDescendantsRecursively(soldier, new ArrayList<>());
+
+        this.moolah += 10;
     }
 
 	private HugeInteger getResourceAmount(UnitTree tree) {

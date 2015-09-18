@@ -1,5 +1,7 @@
 package contracts;
 
+import java.util.List;
+
 /**
  * Defines methods for accessing a UnitTree.
  */
@@ -17,4 +19,6 @@ public interface UnitTree {
 	boolean contains(Unit unit);
 
 	Unit getChild(Unit unit);
+
+	void addDescendantsRecursively(Unit current, List<Unit> list);
 }
