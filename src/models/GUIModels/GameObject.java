@@ -5,21 +5,21 @@ import javafx.scene.image.ImageView;
 
 public abstract class GameObject {
 
-    private Image image;
-    private double width;
-    private double height;
-    private double x;
-    private double y;
+    private ImageView imageView;
 
     protected GameObject(Image image, double width, double height, double x, double y){
-
+        imageViewLoader(image, width, height, x, y);
     }
 
-    private ImageView imageViewLoader(Image image, double width, double height, double x, double y) {
+    public ImageView getImageView(){
+        return this.imageView;
+    }
+
+    private void imageViewLoader(Image image, double width, double height, double x, double y) {
         final ImageView imageView = new ImageView(image);
         setWidthAndHeight(imageView, width, height);
         setVector(imageView, x, y);
-        return imageView;
+        this.imageView = imageView;
     }
 
     private void setVector(ImageView image, double x, double y) {

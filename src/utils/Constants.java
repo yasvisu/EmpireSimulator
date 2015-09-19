@@ -41,7 +41,7 @@ public class Constants {
     public static final double ENEMY_NURUTA_PLANET_Y = 445;
 
     public static final Image MISSILE_IMAGE = new Image(BattlesSimulator.class.getResource("images/missile.png").toString());
-    public static final double MISSILE_HEIGHT = 70;
+    public static final double MISSILE_HEIGHT = 30;
     public static final double MISSILE_WIDTH = 70;
     public static final double MISSILE_X = 125;
     public static final double MISSILE_Y = 190;
