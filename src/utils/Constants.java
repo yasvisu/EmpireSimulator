@@ -13,8 +13,8 @@ public class Constants {
     public static final Image PLAYER_PLANET_IMAGE = new Image(BattlesSimulator.class.getResource("images/planet3.png").toString());
     public static final double PLAYER_PLANET_HEIGHT = 70;
     public static final double PLAYER_PLANET_WIDTH = 90;
-    public static final double PLAYER_PLANET_X = 55;
-    public static final double PLAYER_PLANET_Y = 180;
+    public static final int PLAYER_PLANET_X = 55;
+    public static final int PLAYER_PLANET_Y = 180;
 
     public static final Image ENEMY_VARMALUS_PLANET_IMAGE = new Image(BattlesSimulator.class.getResource("images/planet1.jpg").toString());
     public static final double ENEMY_VARMALUS_PLANET_HEIGHT = 90;
@@ -37,7 +37,7 @@ public class Constants {
     public static final Image ENEMY_NURUTA_PLANET_IMAGE = new Image(BattlesSimulator.class.getResource("images/planet5.png").toString());
     public static final double ENEMY_NURUTA_PLANET_HEIGHT = 120;
     public static final double ENEMY_NURUTA_PLANET_WIDTH = 120;
-    public static final double ENEMY_NURUTA_PLANET_X = 200;
+    public static final double ENEMY_NURUTA_PLANET_X = 400;
     public static final double ENEMY_NURUTA_PLANET_Y = 445;
 
     public static final Image MISSILE_IMAGE = new Image(BattlesSimulator.class.getResource("images/missile.png").toString());

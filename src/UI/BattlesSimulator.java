@@ -3,12 +3,15 @@ package UI;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.animation.TranslateTransitionBuilder;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Light;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -21,6 +24,16 @@ public class BattlesSimulator {
 
     private static Animation missileAnimation;
     private static Group missiles;
+
+    final static ImageView enemyNurutaPlanet = imageViewLoader(
+            Constants.ENEMY_NURUTA_PLANET_IMAGE,
+            Constants.ENEMY_NURUTA_PLANET_WIDTH,
+            Constants.ENEMY_NURUTA_PLANET_HEIGHT,
+            Constants.ENEMY_NURUTA_PLANET_X,
+            Constants.ENEMY_NURUTA_PLANET_Y);
+
+    private static int missilePointX = Constants.PLAYER_PLANET_X-110;
+    private static int missilePointY = Constants.PLAYER_PLANET_Y-150;
 
     public static void display(){
         Stage window = new Stage();
@@ -59,12 +72,7 @@ public class BattlesSimulator {
                 Constants.ENEMY_ZAKROS_PLANET_X,
                 Constants.ENEMY_ZAKROS_PLANET_Y);
 
-        final ImageView enemyNurutaPlanet = imageViewLoader(
-                Constants.ENEMY_NURUTA_PLANET_IMAGE,
-                Constants.ENEMY_NURUTA_PLANET_WIDTH,
-                Constants.ENEMY_NURUTA_PLANET_HEIGHT,
-                Constants.ENEMY_NURUTA_PLANET_X,
-                Constants.ENEMY_NURUTA_PLANET_Y);
+
 
         final ImageView missile = imageViewLoader(
                 Constants.MISSILE_IMAGE,
@@ -104,27 +112,51 @@ public class BattlesSimulator {
     }
 
     private static void startAnimation(){
-        if (missileAnimation != null){
+        if (missilePointX == Constants.ENEMY_NURUTA_PLANET_X-150 && missilePointY == Constants.ENEMY_NURUTA_PLANET_Y-150){
+            missilePointX = Constants.PLAYER_PLANET_X-110;
+            missilePointY = Constants.PLAYER_PLANET_Y-150;
             missileAnimation.stop();
         }
 
-        Random rand = new Random();
+        setMissileRotation(Constants.ENEMY_NURUTA_PLANET_Y);
 
-        final int y0 = rand.nextInt(Constants.BATTLE_WINDOW_HEIGHT / 2) + Constants.BATTLE_WINDOW_HEIGHT / 4;
-        final int y1 = rand.nextInt(Constants.BATTLE_WINDOW_HEIGHT / 2) + Constants.BATTLE_WINDOW_HEIGHT / 4;
+        if(missilePointX < Constants.ENEMY_NURUTA_PLANET_X-150){
+            missilePointX++;
+        }
+        else if (missilePointX > Constants.ENEMY_NURUTA_PLANET_X-150){
+            missilePointX--;
+        }
+
+        if (missilePointY < Constants.ENEMY_NURUTA_PLANET_Y-150){
+            missilePointY++;
+        }
+        else if (missilePointY > Constants.ENEMY_NURUTA_PLANET_Y-150){
+            missilePointY--;
+        }
 
         missileAnimation = TranslateTransitionBuilder.create()
                 .node(missiles)
-                .fromX(-100)
-                .toX(Constants.BATTLE_WINDOW_WIDTH)
-                .fromY(y0)
-                .toY(y1)
-                .duration(Duration.seconds(3))
+                .fromX(missilePointX)
+                .toX(missilePointX)
+                .fromY(missilePointY)
+                .toY(missilePointY)
+                .duration(Duration.millis(5))
                 .onFinished(e -> startAnimation())
                 .build();
 
         missileAnimation.play();
+    }
 
-
+    private static void setMissileRotation(double planetY) {
+        if (missilePointY < planetY){
+            double ratio = planetY - missilePointY;
+            double degrees = ratio / 10;
+            missiles.setRotate(degrees);
+        }
+        else if (missilePointY > planetY){
+            double ratio = missilePointY - planetY;
+            double degrees = (ratio / 10) + 270;
+            missiles.setRotate(degrees);
+        }
     }
 }
