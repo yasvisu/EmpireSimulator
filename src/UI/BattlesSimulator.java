@@ -1,11 +1,17 @@
 package UI;
 
+import controllers.EmpireEngine;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransitionBuilder;
+import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -15,8 +21,8 @@ import models.GUIModels.GameObject;
 import models.GUIModels.Missile;
 import models.GUIModels.Planet;
 import utils.Constants;
-
 import java.util.*;
+import static javax.script.Bindings.*;
 
 
 public class BattlesSimulator {
@@ -97,15 +103,32 @@ public class BattlesSimulator {
 
         foreground.setEffect(new DropShadow());
 
-        final Group root = new Group(background, foreground, missiles);
+        final Text baconLabel = new Text();
+        baconLabel.textProperty().bind(Bindings.concat("Bacon: ", 5));
+        baconLabel.setStyle("-fx-stroke: white;");
+        final Text soldiersLabel = new Text();
+        soldiersLabel.textProperty().bind(Bindings.concat("Soldiers: ", 5));
+        soldiersLabel.setStyle("-fx-stroke: white;");
+        final Text freedomLabel = new Text();
+        freedomLabel.textProperty().bind(Bindings.concat("Freedom: ", 5));
+        freedomLabel.setStyle("-fx-stroke: white;");
+        final Text moolahLabel = new Text();
+        moolahLabel.textProperty().bind(Bindings.concat("Moolah: ", 5));
+        moolahLabel.setStyle("-fx-stroke: white;");
+        final Text elapsedSecondsLabel = new Text();
+        elapsedSecondsLabel.textProperty().bind(Bindings.concat("Elapsed seconds: ", 5));
+        elapsedSecondsLabel.setStyle("-fx-stroke: white;");
+
+        final VBox itemsBox = VBoxBuilder.create()
+                .children(baconLabel, soldiersLabel, freedomLabel, moolahLabel, elapsedSecondsLabel)
+                .translateX(20)
+                .translateY(20)
+                .build();
+        itemsBox.setStyle("-fx-background-color: black;");
+
+        final Group root = new Group(background, foreground, missiles, itemsBox);
         missiles.setVisible(false);
         Scene scene = new Scene(root, Constants.BATTLE_WINDOW_WIDTH, Constants.BATTLE_WINDOW_HEIGHT);
-
-        final Text baconLabel = new Text();
-        final Text soldiersLabel = new Text();
-        final Text freedomLabel = new Text();
-        final Text moolahLabel = new Text();
-        final Text elapcedSecondsLabel = new Text();
 
         window.setScene(scene);
         scene.setOnMousePressed(e -> startAnimation(e.getX(), e.getY()));
