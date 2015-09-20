@@ -10,29 +10,32 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import models.GUIModels.GameObject;
 import models.GUIModels.Missile;
 import models.GUIModels.Planet;
 import utils.Constants;
 
+import java.util.*;
+
 
 public class BattlesSimulator {
 
-    private static Animation missileAnimation;
-    private static Group missiles;
+    private Animation missileAnimation;
+    private Group missiles;
 
-    static Planet enemyNurutaPlanet;
-    static Planet playerPlanet;
-    static Planet enemyVarmalusPlanet;
-    static Planet enemySlekonPlanet;
-    static Planet enemyZakrosPlanet;
-    static Missile missile;
+    List<Planet> planets;
 
-    static Planet chosenPlanet = enemyZakrosPlanet;
+    Missile missile;
 
-    private static int missilePointX = Constants.PLAYER_PLANET_X-120;
-    private static int missilePointY = Constants.PLAYER_PLANET_Y-160;
+    Planet chosenPlanet;
 
-    public static void display(){
+    private int missilePointX = Constants.PLAYER_PLANET_X-120;
+    private int missilePointY = Constants.PLAYER_PLANET_Y-160;
+
+    private Boolean missileAnimationEnded = false;
+    private int enemyPlanetDeviation = 150;
+
+    public  void display(){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(Constants.WINDOW_TITLE);
@@ -41,40 +44,39 @@ public class BattlesSimulator {
 
         final ImageView background = new ImageView(Constants.BACKGROUND_IMAGE);
 
-        playerPlanet = new Planet(
-                Constants.PLAYER_PLANET_IMAGE,
-                Constants.PLAYER_PLANET_WIDTH,
-                Constants.PLAYER_PLANET_HEIGHT,
-                Constants.PLAYER_PLANET_X,
-                Constants.PLAYER_PLANET_Y);
 
-        enemyNurutaPlanet = new Planet(
-                Constants.ENEMY_NURUTA_PLANET_IMAGE,
-                Constants.ENEMY_NURUTA_PLANET_WIDTH,
-                Constants.ENEMY_NURUTA_PLANET_HEIGHT,
-                Constants.ENEMY_NURUTA_PLANET_X,
-                Constants.ENEMY_NURUTA_PLANET_Y);
+        planets = new ArrayList<>(Arrays.asList(
+            new Planet(
+                    Constants.PLAYER_PLANET_IMAGE,
+                    Constants.PLAYER_PLANET_WIDTH,
+                    Constants.PLAYER_PLANET_HEIGHT,
+                    Constants.PLAYER_PLANET_X,
+                    Constants.PLAYER_PLANET_Y),
+            new Planet(
+                    Constants.ENEMY_NURUTA_PLANET_IMAGE,
+                    Constants.ENEMY_NURUTA_PLANET_WIDTH,
+                    Constants.ENEMY_NURUTA_PLANET_HEIGHT,
+                    Constants.ENEMY_NURUTA_PLANET_X,
+                    Constants.ENEMY_NURUTA_PLANET_Y),
+            new Planet(
+                    Constants.ENEMY_VARMALUS_PLANET_IMAGE,
+                    Constants.ENEMY_VARMALUS_PLANET_WIDTH,
+                    Constants.ENEMY_VARMALUS_PLANET_HEIGHT,
+                    Constants.ENEMY_VARMALUS_PLANET_X,
+                    Constants.ENEMY_VARMALUS_PLANET_Y),
 
-        enemyVarmalusPlanet = new Planet(
-                Constants.ENEMY_VARMALUS_PLANET_IMAGE,
-                Constants.ENEMY_VARMALUS_PLANET_WIDTH,
-                Constants.ENEMY_VARMALUS_PLANET_HEIGHT,
-                Constants.ENEMY_VARMALUS_PLANET_X,
-                Constants.ENEMY_VARMALUS_PLANET_Y);
-
-        enemySlekonPlanet = new Planet(
-                Constants.ENEMY_SLEKON_PLANET_IMAGE,
-                Constants.ENEMY_SLEKON_PLANET_WIDTH,
-                Constants.ENEMY_SLEKON_PLANET_HEIGHT,
-                Constants.ENEMY_SLEKON_PLANET_X,
-                Constants.ENEMY_SLEKON_PLANET_Y);
-
-        enemyZakrosPlanet = new Planet(
-                Constants.ENEMY_ZAKROS_PLANET_IMAGE,
-                Constants.ENEMY_ZAKROS_PLANET_WIDTH,
-                Constants.ENEMY_ZAKROS_PLANET_HEIGHT,
-                Constants.ENEMY_ZAKROS_PLANET_X,
-                Constants.ENEMY_ZAKROS_PLANET_Y);
+            new Planet(
+                    Constants.ENEMY_SLEKON_PLANET_IMAGE,
+                    Constants.ENEMY_SLEKON_PLANET_WIDTH,
+                    Constants.ENEMY_SLEKON_PLANET_HEIGHT,
+                    Constants.ENEMY_SLEKON_PLANET_X,
+                    Constants.ENEMY_SLEKON_PLANET_Y),
+            new Planet(
+                    Constants.ENEMY_ZAKROS_PLANET_IMAGE,
+                    Constants.ENEMY_ZAKROS_PLANET_WIDTH,
+                    Constants.ENEMY_ZAKROS_PLANET_HEIGHT,
+                    Constants.ENEMY_ZAKROS_PLANET_X,
+                    Constants.ENEMY_ZAKROS_PLANET_Y)));
 
         missile = new Missile(
                 Constants.MISSILE_IMAGE,
@@ -86,32 +88,34 @@ public class BattlesSimulator {
         missiles = new Group(missile.getImageView());
         missiles.setEffect(new DropShadow(2, Color.color(1, 0, 0)));
 
-        final Group foreground = new Group(
-                playerPlanet.getImageView(),
-                enemyVarmalusPlanet.getImageView(),
-                enemySlekonPlanet.getImageView(),
-                enemyZakrosPlanet.getImageView(),
-                enemyNurutaPlanet.getImageView());
+        final Group foreground = new Group();
+
+        for (Planet planet : planets) {
+            foreground.getChildren().add(planet.getImageView());
+        }
 
         foreground.setEffect(new DropShadow());
 
         final Group root = new Group(background, foreground, missiles);
-
+        missiles.setVisible(false);
         Scene scene = new Scene(root, Constants.BATTLE_WINDOW_WIDTH, Constants.BATTLE_WINDOW_HEIGHT);
         window.setScene(scene);
         scene.setOnMousePressed(e -> startAnimation(e.getX(), e.getY()));
         window.showAndWait();
     }
 
-    private static void startAnimation(double x, double y){
+    private void startAnimation(double x, double y){
         chosenPlanet = findPlanetByXY(x,y);
-        if (missilePointX == chosenPlanet.getX()-150 && missilePointY == chosenPlanet.getY()-150){
+        if (missilePointX == chosenPlanet.getX()-enemyPlanetDeviation && missilePointY == chosenPlanet.getY()-enemyPlanetDeviation){
             missilePointX = Constants.PLAYER_PLANET_X-120;
             missilePointY = Constants.PLAYER_PLANET_Y-160;
             missiles.setVisible(false);
             missileAnimation.stop();
+            missileAnimationEnded = true;
         }
-
+        if (!missileAnimationEnded){
+            missiles.setVisible(true);
+        }
         setMissileRotation(chosenPlanet.getY());
         setMissileMovement(chosenPlanet.getX(), chosenPlanet.getY());
 
@@ -121,33 +125,33 @@ public class BattlesSimulator {
                 .toX(missilePointX)
                 .fromY(missilePointY)
                 .toY(missilePointY)
-                .duration(Duration.millis(5))
+                .duration(Duration.millis(0.1))
                 .onFinished(e -> startAnimation(x,y))
                 .build();
 
         missileAnimation.play();
     }
 
-    private static void setMissileMovement(double x, double y) {
-        if(missilePointX < x - 150){
+    private void setMissileMovement(double x, double y) {
+        if(missilePointX < x - enemyPlanetDeviation){
             missilePointX++;
         }
-        else if (missilePointX > x - 150){
+        else if (missilePointX > x - enemyPlanetDeviation){
             missilePointX--;
         }
 
-        if (missilePointY < y - 150){
+        if (missilePointY < y - enemyPlanetDeviation){
             missilePointY++;
         }
-        else if (missilePointY > y - 150){
+        else if (missilePointY > y - enemyPlanetDeviation){
             missilePointY--;
         }
     }
 
-    private static void setMissileRotation(double planetY) {
+    private void setMissileRotation(double planetY) {
         if (missilePointY < planetY){
             double ratio = planetY - missilePointY;
-            double degrees = (ratio / 10) - 10;
+            double degrees = (ratio / 10) - 15;
             missiles.setRotate(degrees);
         }
         else if (missilePointY > planetY){
@@ -157,37 +161,22 @@ public class BattlesSimulator {
         }
     }
 
-    private static Planet findPlanetByXY(double x, double y) {
-        int planetAverageRadius = 50;
+    private Planet findPlanetByXY(double x, double y) {
         final int deviationX = 66;
         final int deviationY = 35;
 
-        Boolean isClickedOnNarutaPlanet =
-                Math.pow((x - (enemyNurutaPlanet.getX() + deviationX)),2) + Math.pow((y - (enemyNurutaPlanet.getY() + deviationY)),2)
-                        <= Math.pow(planetAverageRadius,2);
-        Boolean isClickedOnVarmalusPlanet =
-                Math.pow((x - (enemyVarmalusPlanet.getX() + deviationX)),2) + Math.pow((y - (enemyVarmalusPlanet.getY() + deviationY)),2)
-                        <= Math.pow(planetAverageRadius,2);
-        Boolean isClickedOnSlekonPlanet =
-                Math.pow((x - (enemySlekonPlanet.getX() + deviationX)),2) + Math.pow((y - (enemySlekonPlanet.getY() + deviationY)),2)
-                        <= Math.pow(planetAverageRadius,2);
-        Boolean isClickedOnZakrosPlanet =
-                Math.pow((x - (enemyZakrosPlanet.getX() + deviationX)),2) + Math.pow((y - (enemyZakrosPlanet.getY() + deviationY)),2)
-                        <= Math.pow(planetAverageRadius,2);
-        if (isClickedOnNarutaPlanet){
-            return enemyNurutaPlanet;
+        Optional<Planet> matchedPlanet = planets
+                .stream()
+                .filter(planet -> Math.pow((x - (planet.getX() + deviationX)), 2) + Math.pow((y - (planet.getY() + deviationY)), 2)
+                        <= Math.pow((planet.getWidth()/2), 2))
+                .findFirst();
+
+        try {
+            return matchedPlanet.get();
         }
-        else if (isClickedOnSlekonPlanet){
-            return enemySlekonPlanet;
-        }
-        else if (isClickedOnVarmalusPlanet){
-            return enemyVarmalusPlanet;
-        }
-        else if (isClickedOnZakrosPlanet){
-            return enemyZakrosPlanet;
-        }
-        else {
-            return playerPlanet;
+        catch (NoSuchElementException e){
+            missileAnimationEnded = true;
+            return planets.get(0);
         }
     }
 }

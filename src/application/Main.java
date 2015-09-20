@@ -13,9 +13,8 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = new BorderPane();
-			Button battleButtonSample = new Button("Go to battle box");
-			battleButtonSample.setOnAction(e -> BattlesSimulator.display());
-			//BattlesSimulator.display();
+			Button battleButtonSample = new Button("Go to battle simulator");
+			battleButtonSample.setOnAction(e -> new BattlesSimulator().display());
 			root.setCenter(battleButtonSample);
 
 			Scene scene = new Scene(root,400,400);

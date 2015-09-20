@@ -11,8 +11,12 @@ public abstract class GameObject {
     private ImageView imageView;
     private double x;
     private double y;
+    private double width;
+    private double height;
 
     protected GameObject(Image image, double width, double height, double x, double y){
+        this.setWidth(width);
+        this.setHeight(height);
         try {
             this.setX(x);
         } catch (GameObjectOutOfWindowBoundsException e) {
@@ -52,6 +56,22 @@ public abstract class GameObject {
                     String.format(Messages.gameObjectOutOfWindowBoundsMessage, 'y', Constants.BATTLE_WINDOW_HEIGHT));
         }
         this.y = y;
+    }
+
+    public double getWidth(){
+        return this.width;
+    }
+
+    private void setWidth(double width){
+        this.width = width;
+    }
+
+    public double getHeight(){
+        return this.height;
+    }
+
+    private void setHeight(double height){
+        this.height = height;
     }
 
     private void imageViewLoader(Image image, double width, double height, double x, double y) {
