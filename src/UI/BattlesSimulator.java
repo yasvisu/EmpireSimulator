@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -99,6 +100,13 @@ public class BattlesSimulator {
         final Group root = new Group(background, foreground, missiles);
         missiles.setVisible(false);
         Scene scene = new Scene(root, Constants.BATTLE_WINDOW_WIDTH, Constants.BATTLE_WINDOW_HEIGHT);
+
+        final Text baconLabel = new Text();
+        final Text soldiersLabel = new Text();
+        final Text freedomLabel = new Text();
+        final Text moolahLabel = new Text();
+        final Text elapcedSecondsLabel = new Text();
+
         window.setScene(scene);
         scene.setOnMousePressed(e -> startAnimation(e.getX(), e.getY()));
         window.showAndWait();
@@ -168,7 +176,7 @@ public class BattlesSimulator {
         Optional<Planet> matchedPlanet = planets
                 .stream()
                 .filter(planet -> Math.pow((x - (planet.getX() + deviationX)), 2) + Math.pow((y - (planet.getY() + deviationY)), 2)
-                        <= Math.pow((planet.getWidth()/2), 2))
+                        <= Math.pow((planet.getWidth() / 2), 2))
                 .findFirst();
 
         try {
