@@ -31,8 +31,8 @@ public class Constants {
     public static final Image ENEMY_ZAKROS_PLANET_IMAGE = new Image(BattlesSimulator.class.getResource("images/planet4.png").toString());
     public static final double ENEMY_ZAKROS_PLANET_HEIGHT = 70;
     public static final double ENEMY_ZAKROS_PLANET_WIDTH = 120;
-    public static final double ENEMY_ZAKROS_PLANET_X = 570;
-    public static final double ENEMY_ZAKROS_PLANET_Y = 155;
+    public static final double ENEMY_ZAKROS_PLANET_X = 570;// +66
+    public static final double ENEMY_ZAKROS_PLANET_Y = 155; //+35
 
     public static final Image ENEMY_NURUTA_PLANET_IMAGE = new Image(BattlesSimulator.class.getResource("images/planet5.png").toString());
     public static final double ENEMY_NURUTA_PLANET_HEIGHT = 120;
