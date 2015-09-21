@@ -63,4 +63,28 @@ public interface Engine {
 	 */
 	long getScore();
 
+    /**
+     * Returns the current amount of Bacon resource
+     * @return HugeInteger, amount of Bacon resource
+     */
+	HugeInteger getBaconAmount();
+
+    /**
+     * Returns the current amount of Freedom resource
+     * @return HugeInteger, amount of Freedom resource
+     */
+	HugeInteger getFreedomAmount();
+
+    /**
+     * Returns the current amount of Democracy resource
+     * @return HugeInteger, amount of Democracy resource
+     */
+	HugeInteger getDemocracyAmount();
+
+    /**
+     * Returns the current money (moolah) resource
+     * @return Long, amount of money resource
+     */
+	long getMoolah();
+
 }

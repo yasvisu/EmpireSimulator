@@ -308,6 +308,26 @@ public class EmpireEngine implements Engine {
         this.moolah += 10;
     }
 
+    @Override
+	public HugeInteger getBaconAmount() {
+		return this.getResourceAmount(this.bacon);
+	}
+
+    @Override
+	public HugeInteger getDemocracyAmount() {
+		return this.getResourceAmount(this.democracy);
+	}
+
+    @Override
+	public HugeInteger getFreedomAmount() {
+		return this.getResourceAmount(this.democracy);
+	}
+
+    @Override
+	public long getMoolah() {
+		return this.moolah;
+	}
+
 	private HugeInteger getResourceAmount(UnitTree tree) {
 		HugeInteger resourceAmount = new HugeInteger(0, 0);
 		Unit child = tree.getRootUnit();
