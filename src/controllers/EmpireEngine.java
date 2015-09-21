@@ -9,6 +9,9 @@ import models.EmpireUnitTree;
 import models.HugeInteger;
 import java.util.ArrayList;
 
+/**
+ * Base engine class, containint the basic functionality, als keeping the player data and unit trees.
+ */
 public class EmpireEngine implements Engine {
 
     private UnitTree bacon;
@@ -25,6 +28,10 @@ public class EmpireEngine implements Engine {
 		this.elapsedSeconds = 0;
     }
 
+    /**
+     * Update method parses through all unit trees and updates all unit data, increases descendants with output
+     * quantities.
+     */
     @Override
     public void update() {
 
@@ -32,16 +39,6 @@ public class EmpireEngine implements Engine {
 		long deltaT = current - this.elapsedSeconds * 1000;
 		long deltaTSeconds = deltaT / 1000;
 		if (deltaTSeconds > 0) {
-	    /*
-	     * Parse through all trees (or other types of data); update all
-	     * trees.
-	     * 
-	     * Bacon: parse tree from root; increase descendants with output
-	     * quantities. Freedom: parse tree from root; increase only Freedom
-	     * at the bottom. Increase democracy by: (senators' output) *
-	     * deltaTSeconds Money: do nothing (to be updated by dedicated
-	     * methods for selling / buying)
-	     */
 			Unit currentBaconNode = this.bacon.getRootUnit();
 			while(this.bacon.getChild(currentBaconNode) != null) {
 				Unit child = this.bacon.getChild(currentBaconNode);
@@ -69,6 +66,11 @@ public class EmpireEngine implements Engine {
 		}
     }
 
+    /**
+     * Retrieves specific unit tree.
+     * @param resourceName    the resource tree to get
+     * @return EmpireUnitTree containing all units in the given tree.
+     */
     @Override
     public UnitTree getUnits(String resourceName) {
 	switch (resourceName) {
@@ -83,13 +85,12 @@ public class EmpireEngine implements Engine {
 		}
     }
 
-	/*
-	 * Check whether unit can be upgraded. Use
-	 * Unit.getUpgradeLevel(upgradeType); Use
-	 * this.calculateUpgradeCost(upgradeType, level); if
-	 * Unit.getExponent()== cost exponent AND Unit.getPrecision() > cost
-	 * precision => true else false
-	 */
+    /**
+     * Checks whether a specific upgrade for a given unit can be performed.
+     * @param unit            the unit to upgrade
+     * @param upgradeType    the upgrade type
+     * @return Boolean value stating is the upgrade currently allowed or not.
+     */
     @Override
     public boolean peekUpgrade(Unit unit, UpgradeTypes upgradeType) {
 		if (unit == null) {
@@ -105,14 +106,13 @@ public class EmpireEngine implements Engine {
 		return false;
     }
 
-	/*
-	 * Use peekUpgrade(unit, upgradeType) to see if an upgrade is possible.
-	 * If true, set output with Unit.setOutput(number), or set spawncount
-	 * with Unit.setSpawnCount(number). Use
-	 * this.calculateUpgradeCost(upgradeType, level) to get the costs, then
-	 * subtract the costs from the appropriate units. Hint: Get the
-	 * "sacrifice unit" via previous unit.
-	 */
+    /**
+     * Applies an upgrade for a given unit, if all requirements are met.
+     * Uses the peekUpgrade to check whether the conditions have been met.
+     * @param unit            the unit to upgrade
+     * @param upgradeType    the upgrade type
+     * @return Boolean value stating whether the operation has been successful.
+     */
     @Override
     public boolean upgrade(Unit unit, UpgradeTypes upgradeType) {
 		boolean canUpgrade = this.peekUpgrade(unit, upgradeType);
@@ -144,14 +144,12 @@ public class EmpireEngine implements Engine {
 		return false;
     }
 
-	/*
-	 * Use peekBuyUnits(unit, count) to see if an purchase is possible. If
-	 * true, calculate # of new Units via count * Unit.getSpawnCount(). Then
-	 * modify the precision and exponent. Use
-	 * this.calculateUpgradeCost(upgradeType, level) to get the costs, then
-	 * subtract the costs from the appropriate units. Hint: Get the
-	 * "sacrifice unit" via previous unit.
-	 */
+    /**
+     * Checks whether a given amount of specific unit can be purchased.
+     * @param unit    the unit to check
+     * @param count    the amount to check
+     * @return Boolean value stating whether the operation can be performed or not.
+     */
     @Override
     public boolean peekBuyUnits(Unit unit, HugeInteger count) {
 		HugeInteger totalUnitCost = new HugeInteger(unit.getUnitCost().getPrecision() * count.getPrecision(),
@@ -185,6 +183,12 @@ public class EmpireEngine implements Engine {
 		return false;
     }
 
+    /**
+     * Performs the actual units purchase, after checking whether conditions have been met with peekBuyUnits.
+     * @param unit    the unit type to buy
+     * @param count    the amount of units to purchase
+     * @return Boolean value indicating whether the operation has been successful.
+     */
     @Override
     public boolean buyUnits(Unit unit, HugeInteger count) {
 		if (this.peekBuyUnits(unit, count)) {
@@ -234,28 +238,20 @@ public class EmpireEngine implements Engine {
 		return false;
     }
 
-	/*
-	 * Leap the engine by a certain amount of seconds:
-	 *
-	 * 1. Decrease this.elapsedSeconds by the amount of seconds
-	 *
-	 * 2. this.update();
-	 *
-	 */
+    /**
+     * Leaps time forward in the engine, related to some upgrade operations.
+     * @param seconds    the amount of seconds to leap
+     */
     @Override
     public void leapSeconds(long seconds) {
 		this.elapsedSeconds -= seconds;
 		this.update();
     }
 
-	/*
-	 * Calculate the score of the player, based on:
-	 *
-	 * - Resources - Units - Upgrades
-	 *
-	 * (you decide how to weigh each)
-	 *
-	 */
+    /**
+     * Provides the current player score based on the resources available.
+     * @return Player score in type of Long.
+     */
     @Override
     public long getScore() {
 		long score = 0;
@@ -266,6 +262,9 @@ public class EmpireEngine implements Engine {
 		return score;
     }
 
+    /**
+     * Initializes the engine state.
+     */
     public void initialize() {
         Unit bacon = new EmpireUnit(40, 1, "Bacon", "bacon flavor text",
                 new HugeInteger(0, 0), new HugeInteger(0, 0), new HugeInteger(0, 0)) {
@@ -308,26 +307,47 @@ public class EmpireEngine implements Engine {
         this.moolah += 10;
     }
 
+    /**
+     * Provides the current Bacon resource amount.
+     * @return HugeInteger Bacon
+     */
     @Override
 	public HugeInteger getBaconAmount() {
 		return this.getResourceAmount(this.bacon);
 	}
 
+    /**
+     * Provides the current Democracy resource amount.
+     * @return HugeInteger Democracy
+     */
     @Override
 	public HugeInteger getDemocracyAmount() {
 		return this.getResourceAmount(this.democracy);
 	}
 
+    /**
+     * Provides the current Freedom resource amount.
+     * @return HugeInteger Freedom
+     */
     @Override
 	public HugeInteger getFreedomAmount() {
 		return this.getResourceAmount(this.democracy);
 	}
 
+    /**
+     * Provides the current Moolah (money) resource amount.
+     * @return Long Moolah (money)
+     */
     @Override
 	public long getMoolah() {
 		return this.moolah;
 	}
 
+    /**
+     * Returns the current resource for a given unit tree, where resource is at the bottom of the tree.
+     * @param tree The resource tree.
+     * @return HugeInteger Resource amount
+     */
 	private HugeInteger getResourceAmount(UnitTree tree) {
 		HugeInteger resourceAmount = new HugeInteger(0, 0);
 		Unit child = tree.getRootUnit();
@@ -342,6 +362,11 @@ public class EmpireEngine implements Engine {
 		} while(true);
 	}
 
+    /**
+     * Sets the resource amount for a given unit/resource tree.
+     * @param tree Resource tree to update amount in.
+     * @param amount Amount to set, HugeInteger.
+     */
 	private void setResourceAmount(UnitTree tree, HugeInteger amount) {
 		Unit child = tree.getRootUnit();
 		do {
