@@ -25,26 +25,6 @@ public class EmpireEngine implements Engine {
 		this.elapsedSeconds = 0;
     }
 
-	public UnitTree getBacon(){
-		return this.bacon;
-	}
-
-	public UnitTree getFreedom(){
-		return this.freedom;
-	}
-
-	public UnitTree getDemocracy(){
-		return this.democracy;
-	}
-
-	public long getMoolah(){
-		return this.moolah;
-	}
-
-	public long getElapsedSeconds(){
-		return this.elapsedSeconds;
-	}
-
     @Override
     public void update() {
 

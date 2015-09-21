@@ -6,15 +6,32 @@ import utils.Constants;
 import utils.Messages;
 import utils.exceptions.GameObjectOutOfWindowBoundsException;
 
-public abstract class GameObject {
 
+/**
+ * These objects are significant for the graphic user interface of the game.
+ * The Image argument represents the image of the object rendered on the screen.
+ * This class is abstract and is inherited by the main graphic objects in this program.
+ *
+ * @return object with specified image, width, height, x and y axis.
+ * @ see Image
+ */
+public abstract class GameObject {
     private ImageView imageView;
     private double x;
     private double y;
     private double width;
     private double height;
 
-    protected GameObject(Image image, double width, double height, double x, double y){
+    /**
+     * Creates an object that can be printed on the screen.
+     *
+     * @param image represents the image of the object rendered in specific width and height.
+     * @param width determine the width of the image on the GUI window.
+     * @param height determine the height of the image on the GUI window.
+     * @param x determine the x axis of the image on the GUI window.
+     * @param y determine the y axis of the image on the GUI window.
+     */
+    protected GameObject (Image image, double width, double height, double x, double y){
         this.setWidth(width);
         this.setHeight(height);
         try {
@@ -38,6 +55,10 @@ public abstract class GameObject {
         return this.x;
     }
 
+    /**
+     * Set the x coordinate point of the game object.
+     * @throws GameObjectOutOfWindowBoundsException if the given coordinate is out of the window bounds.
+     */
     private void setX(double x)throws GameObjectOutOfWindowBoundsException{
         if (x > Constants.BATTLE_WINDOW_WIDTH || x < 0){
             throw new GameObjectOutOfWindowBoundsException(
@@ -50,6 +71,10 @@ public abstract class GameObject {
         return this.y;
     }
 
+    /**
+     * Set the y coordinate point of the game object.
+     * @throws GameObjectOutOfWindowBoundsException if the given coordinate is out of the window bounds.
+     */
     private void setY(double y) throws GameObjectOutOfWindowBoundsException {
         if (y > Constants.BATTLE_WINDOW_HEIGHT || y < 0){
             throw new GameObjectOutOfWindowBoundsException(
@@ -74,6 +99,13 @@ public abstract class GameObject {
         this.height = height;
     }
 
+    /**
+     * Loads the ImageView with specified parameters.
+     * @param width determine the width of the image on the GUI window.
+     * @param height determine the height of the image on the GUI window.
+     * @param x determine the x axis of the image on the GUI window.
+     * @param y determine the y axis of the image on the GUI window.
+     */
     private void imageViewLoader(Image image, double width, double height, double x, double y) {
         final ImageView imageView = new ImageView(image);
         setWidthAndHeight(imageView, width, height);

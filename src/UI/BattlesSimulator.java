@@ -1,13 +1,10 @@
 package UI;
 
-import controllers.EmpireEngine;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -17,12 +14,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import models.GUIModels.GameObject;
 import models.GUIModels.Missile;
 import models.GUIModels.Planet;
 import utils.Constants;
 import java.util.*;
-import static javax.script.Bindings.*;
 
 
 public class BattlesSimulator {
@@ -35,13 +30,27 @@ public class BattlesSimulator {
     Missile missile;
 
     Planet chosenPlanet;
-
+    /**
+     * Missile starting point. It starting point is the location of the player planet.
+     */
     private int missilePointX = Constants.PLAYER_PLANET_X-120;
     private int missilePointY = Constants.PLAYER_PLANET_Y-160;
 
+    /**
+     * When the missile reach the chosen enemy planet the animation ends.
+     * The missile wont be rendered again on the screen.
+     */
     private Boolean missileAnimationEnded = false;
+
+    /**
+     * Removes the difference in the coordinates of the planets.
+     */
     private int enemyPlanetDeviation = 150;
 
+    /**
+     * Displays the battles window.
+     * This method render all the objects in it.
+     */
     public  void display(){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -119,6 +128,9 @@ public class BattlesSimulator {
         elapsedSecondsLabel.textProperty().bind(Bindings.concat("Elapsed seconds: ", 5));
         elapsedSecondsLabel.setStyle("-fx-stroke: white;");
 
+        /**
+         * it keeps all the player resources in the game.
+         */
         final VBox itemsBox = VBoxBuilder.create()
                 .children(baconLabel, soldiersLabel, freedomLabel, moolahLabel, elapsedSecondsLabel)
                 .translateX(20)
@@ -135,6 +147,11 @@ public class BattlesSimulator {
         window.showAndWait();
     }
 
+    /**
+     * It animates the missile and moves it from the starting point to the enemy planet location.
+     * @param x coordinate of the enemy planet location.
+     * @param y coordinate of the enemy planet location.
+     */
     private void startAnimation(double x, double y){
         chosenPlanet = findPlanetByXY(x,y);
         if (missilePointX == chosenPlanet.getX()-enemyPlanetDeviation && missilePointY == chosenPlanet.getY()-enemyPlanetDeviation){
@@ -163,6 +180,11 @@ public class BattlesSimulator {
         missileAnimation.play();
     }
 
+    /**
+     * Moves the missile closer to the enemy planet.
+     * @param x coordinate of the enemy planet location.
+     * @param y coordinate of the enemy planet location.
+     */
     private void setMissileMovement(double x, double y) {
         if(missilePointX < x - enemyPlanetDeviation){
             missilePointX++;
@@ -179,6 +201,11 @@ public class BattlesSimulator {
         }
     }
 
+    /**
+     * rotates the missile towards an enemy planet
+     * it rotates the image by degrees
+     * @param planetY y coordinate of the enemy planet.
+     */
     private void setMissileRotation(double planetY) {
         if (missilePointY < planetY){
             double ratio = planetY - missilePointY;
@@ -192,14 +219,25 @@ public class BattlesSimulator {
         }
     }
 
+    /**
+     * Finds a planet by x and y coordinates.
+     * This method checks if the x and y coordinates belong to any of the enemies planets.
+     * If true, return the planet and start the animation, else, stop animation.
+     * @param x coordinate of wanted planet.
+     * @param y coordinate of wanted planet.
+     * @return Planet by given x and y coordinates.
+     */
     private Planet findPlanetByXY(double x, double y) {
         final int deviationX = 66;
         final int deviationY = 35;
 
         Optional<Planet> matchedPlanet = planets
                 .stream()
-                .filter(planet -> Math.pow((x - (planet.getX() + deviationX)), 2) + Math.pow((y - (planet.getY() + deviationY)), 2)
-                        <= Math.pow((planet.getWidth() / 2), 2))
+                .filter(planet -> Math.pow(
+                        (x - (planet.getX() + deviationX)), 2)
+                        + Math.pow((y - (planet.getY() + deviationY)), 2)
+                        <= Math.pow((planet.getWidth() / 2), 2)
+                        && planet != planets.get(0))
                 .findFirst();
 
         try {
