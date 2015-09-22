@@ -15,7 +15,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import models.HugeInteger;
 import models.guiModels.Missile;
 import models.guiModels.Planet;
 import utils.Constants;
@@ -278,7 +277,7 @@ public class BattlesSimulator {
     }
 
     private void battleProcess(){
-        long enemyMoolah = engine.getMoolah();
+        long enemyMoolah = engine.getMoolahAmount();
 
         int enemyBaconExponent = EnhancedRandom.nextInt(
                 (engine.getBaconAmount().getExponent() / 2),
