@@ -339,9 +339,47 @@ public class EmpireEngine implements Engine {
      * @return Long Moolah (money)
      */
     @Override
-	public long getMoolah() {
+	public long getMoolahAmount() {
 		return this.moolah;
 	}
+
+	/**
+	 * Sets the current Bacon resource amount.
+     * @param amount New resource amount to set.
+     */
+	@Override
+	public void setBaconAmount(HugeInteger amount) { this.setResourceAmount(this.bacon, amount); }
+
+	/**
+	 * Sets the current Democracy resource amount.
+     * @param amount New resource amount to set.
+	 */
+	@Override
+	public void setDemocracyAmount(HugeInteger amount) {
+		this.setResourceAmount(this.democracy, amount);
+	}
+
+	/**
+	 * Sets the current Freedom resource amount.
+     * @param amount New resource amount to set.
+     */
+	@Override
+	public void setFreedomAmount(HugeInteger amount) {
+		this.setResourceAmount(this.democracy, amount);
+	}
+
+	/**
+	 * Sets the current Moolah (money) resource amount.
+     * @param amount New resource amount to set.
+	 */
+
+	@Override
+	public void setMoolahAmount(long amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Moolah amount cannot be negative.");
+        }
+
+        this.moolah = amount; }
 
     /**
      * Returns the current resource for a given unit tree, where resource is at the bottom of the tree.
