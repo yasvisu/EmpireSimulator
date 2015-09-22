@@ -30,7 +30,7 @@
                <children>
                   <Button fx:id="startButton" layoutX="45.0" layoutY="149.0" mnemonicParsing="false" onAction="#startAction" text="START" textFill="#08a7e1" />
                   <Button fx:id="aboutButton" layoutX="169.0" layoutY="149.0" mnemonicParsing="false" text="ABOUT" textFill="#1e141b" />
-                  <Button fx:id="exitButton" layoutX="304.0" layoutY="149.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="EXIT" textFill="#d31010" />
+                  <Button fx:id="exitButton" layoutX="304.0" layoutY="149.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="25.0" prefWidth="57.0" text="EXIT" textFill="#d31010" />
                </children>
             </AnchorPane>
          </center>
