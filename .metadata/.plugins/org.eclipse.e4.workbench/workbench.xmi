@@ -1701,7 +1701,7 @@
     <parameters xmi:id="_HcWUBVsFEeWg6PWxKUuj0A" elementId="org.eclipse.egit.ui.history.CompareMode" name="Compare mode"/>
   </commands>
   <commands xmi:id="_HcWUBlsFEeWg6PWxKUuj0A" elementId="org.eclipse.ui.navigate.nextTab" commandName="Next Tab" description="Switch to the next tab" category="_Hb8reFsFEeWg6PWxKUuj0A"/>
-  <commands xmi:id="_HcWUB1sFEeWg6PWxKUuj0A" elementId="org.eclipse.ui.window.quickAccess" commandName="Quick Access" description="Quickly access UI elements" category="_Hb8rZVsFEeWg6PWxKUuj0A"/>
+  <commands xmi:id="_HcWUB1sFEeWg6PWxKUuj0A" elementId="org.eclipse.ui.window.quickAccess" commandName="Quick Access" description="Quickly access ui elements" category="_Hb8rZVsFEeWg6PWxKUuj0A"/>
   <commands xmi:id="_HcWUCFsFEeWg6PWxKUuj0A" elementId="org.eclipse.ui.edit.text.showInformation" commandName="Show Tooltip Description" description="Displays information for the current caret location in a focused hover" category="_Hb8EUlsFEeWg6PWxKUuj0A"/>
   <commands xmi:id="_HcWUCVsFEeWg6PWxKUuj0A" elementId="org.eclipse.jdt.ui.edit.text.java.add.import" commandName="Add Import" description="Create import statement on selection" category="_Hb9SgVsFEeWg6PWxKUuj0A"/>
   <commands xmi:id="_HcWUClsFEeWg6PWxKUuj0A" elementId="org.eclipse.mylyn.tasks.ui.command.attachment.open" commandName="Open Attachment" category="_Hb8rdVsFEeWg6PWxKUuj0A"/>
@@ -2677,7 +2677,7 @@
   <commands xmi:id="_ITun8FsFEeWg6PWxKUuj0A" elementId="AUTOGEN:::org.eclipse.mylyn.tasks.ui.actions.view/org.eclipse.mylyn.tasks.ui.synchronize.changed" commandName="Synchronize Changed" description="Synchronize Changed" category="_Hb8rcFsFEeWg6PWxKUuj0A"/>
   <commands xmi:id="_ITvPAFsFEeWg6PWxKUuj0A" elementId="AUTOGEN:::org.eclipse.mylyn.tasks.ui.actions.view/org.eclipse.mylyn.tasks.ui.tasks.restore" commandName="Restore Tasks from History..." category="_Hb8rcFsFEeWg6PWxKUuj0A"/>
   <commands xmi:id="_ITvPAVsFEeWg6PWxKUuj0A" elementId="AUTOGEN:::org.eclipse.mylyn.tasks.ui.actions.view/org.eclipse.mylyn.tasks.ui.open.repositories.view" commandName="Show Task Repositories View" description="Show Task Repositories View" category="_Hb8rcFsFEeWg6PWxKUuj0A"/>
-  <commands xmi:id="_ITv2EFsFEeWg6PWxKUuj0A" elementId="AUTOGEN:::org.eclipse.mylyn.tasks.ui.actions.view/org.eclipse.mylyn.doc.legend.show.action" commandName="Show UI Legend" description="Show Tasks UI Legend" category="_Hb8rcFsFEeWg6PWxKUuj0A"/>
+  <commands xmi:id="_ITv2EFsFEeWg6PWxKUuj0A" elementId="AUTOGEN:::org.eclipse.mylyn.tasks.ui.actions.view/org.eclipse.mylyn.doc.legend.show.action" commandName="Show ui Legend" description="Show Tasks ui Legend" category="_Hb8rcFsFEeWg6PWxKUuj0A"/>
   <commands xmi:id="_ITv2EVsFEeWg6PWxKUuj0A" elementId="AUTOGEN:::org.eclipse.mylyn.tasks.ui.actions.view/org.eclipse.mylyn.context.ui.actions.tasklist.focus" commandName="Focus on Workweek" description="Focus on Workweek" category="_Hb8rcFsFEeWg6PWxKUuj0A"/>
   <commands xmi:id="_ITwdIFsFEeWg6PWxKUuj0A" elementId="AUTOGEN:::org.eclipse.pde.ui.logViewActions/org.eclipse.jdt.debug.ui.LogViewActions.showStackTrace" commandName="Show Stack Trace in Console View" description="Show Stack Trace in Console View" category="_Hb8rcFsFEeWg6PWxKUuj0A"/>
   <commands xmi:id="_ITxEMFsFEeWg6PWxKUuj0A" elementId="AUTOGEN:::org.eclipse.rse.ui.view.systemView.toolbar/org.eclipse.rse.ui.view.systemView.toolbar.linkWithSystemView" commandName="Link with Editor" category="_Hb8rcFsFEeWg6PWxKUuj0A"/>
@@ -2704,7 +2704,7 @@
   <categories xmi:id="_Hb8EUFsFEeWg6PWxKUuj0A" elementId="org.eclipse.ui.category.edit" name="Edit"/>
   <categories xmi:id="_Hb8EUVsFEeWg6PWxKUuj0A" elementId="org.eclipse.mylyn.wikitext.ui.editor.category" name="WikiText Markup Editing Commands" description="commands for editing lightweight markup"/>
   <categories xmi:id="_Hb8EUlsFEeWg6PWxKUuj0A" elementId="org.eclipse.ui.category.textEditor" name="Text Editing" description="Text Editing Commands"/>
-  <categories xmi:id="_Hb8EU1sFEeWg6PWxKUuj0A" elementId="org.eclipse.mylyn.context.ui.commands" name="Focused UI" description="Task-Focused Interface"/>
+  <categories xmi:id="_Hb8EU1sFEeWg6PWxKUuj0A" elementId="org.eclipse.mylyn.context.ui.commands" name="Focused ui" description="Task-Focused Interface"/>
   <categories xmi:id="_Hb8rYFsFEeWg6PWxKUuj0A" elementId="org.eclipse.wst.jsdt.ui.category.source" name="Source" description="JavaScript Source Actions"/>
   <categories xmi:id="_Hb8rYVsFEeWg6PWxKUuj0A" elementId="org.eclipse.mylyn.tasks.ui.commands" name="Task Repositories"/>
   <categories xmi:id="_Hb8rYlsFEeWg6PWxKUuj0A" elementId="org.eclipse.wst.server.ui" name="Server" description="Server"/>

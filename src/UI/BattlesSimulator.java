@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransitionBuilder;
@@ -14,8 +14,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import models.GUIModels.Missile;
-import models.GUIModels.Planet;
+import models.guiModels.Missile;
+import models.guiModels.Planet;
 import utils.Constants;
 import java.util.*;
 
@@ -36,6 +36,9 @@ public class BattlesSimulator {
     private int missilePointX = Constants.PLAYER_PLANET_X-120;
     private int missilePointY = Constants.PLAYER_PLANET_Y-160;
 
+    private final int deviationX = 65;
+    private final int deviationY = 35;
+
     /**
      * When the missile reach the chosen enemy planet the animation ends.
      * The missile wont be rendered again on the screen.
@@ -47,6 +50,7 @@ public class BattlesSimulator {
      */
     private int enemyPlanetDeviation = 150;
 
+    double unstableRotationRatio = 0;
     /**
      * Displays the battles window.
      * This method render all the objects in it.
@@ -154,18 +158,35 @@ public class BattlesSimulator {
      */
     private void startAnimation(double x, double y){
         chosenPlanet = findPlanetByXY(x,y);
-        if (missilePointX == chosenPlanet.getX()-enemyPlanetDeviation && missilePointY == chosenPlanet.getY()-enemyPlanetDeviation){
-            missilePointX = Constants.PLAYER_PLANET_X-120;
-            missilePointY = Constants.PLAYER_PLANET_Y-160;
-            missiles.setVisible(false);
-            missileAnimation.stop();
-            missileAnimationEnded = true;
-        }
+
         if (!missileAnimationEnded){
             missiles.setVisible(true);
         }
-        setMissileRotation(chosenPlanet.getY());
-        setMissileMovement(chosenPlanet.getX(), chosenPlanet.getY());
+
+        if (chosenPlanet == null){
+            setMissileMovement(x, y);
+            missiles.setRotate(unstableRotationRatio+=2);
+
+            if (missilePointX == x-enemyPlanetDeviation && missilePointY == y-enemyPlanetDeviation){
+                missilePointX = Constants.PLAYER_PLANET_X-120;
+                missilePointY = Constants.PLAYER_PLANET_Y-160;
+                missiles.setVisible(false);
+                missileAnimation.stop();
+                missileAnimationEnded = true;
+            }
+        }
+        else{
+            setMissileRotation(chosenPlanet.getY());
+            setMissileMovement(chosenPlanet.getX(), chosenPlanet.getY());
+
+            if (missilePointX == chosenPlanet.getX()-enemyPlanetDeviation && missilePointY ==chosenPlanet.getY()-enemyPlanetDeviation){
+                missilePointX = Constants.PLAYER_PLANET_X-120;
+                missilePointY = Constants.PLAYER_PLANET_Y-160;
+                missiles.setVisible(false);
+                missileAnimation.stop();
+                missileAnimationEnded = true;
+            }
+        }
 
         missileAnimation = TranslateTransitionBuilder.create()
                 .node(missiles)
@@ -228,8 +249,6 @@ public class BattlesSimulator {
      * @return Planet by given x and y coordinates.
      */
     private Planet findPlanetByXY(double x, double y) {
-        final int deviationX = 66;
-        final int deviationY = 35;
 
         Optional<Planet> matchedPlanet = planets
                 .stream()
@@ -244,8 +263,7 @@ public class BattlesSimulator {
             return matchedPlanet.get();
         }
         catch (NoSuchElementException e){
-            missileAnimationEnded = true;
-            return planets.get(0);
+            return null;
         }
     }
 }

@@ -1,6 +1,6 @@
 package application;
 	
-import UI.BattlesSimulator;
+import ui.BattlesSimulator;
 import javafx.application.Application;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;

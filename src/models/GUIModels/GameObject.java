@@ -1,4 +1,4 @@
-package models.GUIModels;
+package models.guiModels;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

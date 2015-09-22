@@ -1,6 +1,6 @@
 package utils;
 
-import UI.BattlesSimulator;
+import ui.BattlesSimulator;
 import javafx.scene.image.Image;
 
 public class Constants {
