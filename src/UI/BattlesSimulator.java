@@ -11,10 +11,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import models.HugeInteger;
 import models.guiModels.Missile;
 import models.guiModels.Planet;
 import utils.Constants;
@@ -28,19 +30,22 @@ public class BattlesSimulator {
     private Animation missileAnimation;
     private Group missiles;
 
+    /**
+     * List planets in the galactic.
+     */
     private List<Planet> planets;
 
-    private Missile missile;
-
-    private Planet chosenPlanet;
     /**
      * Missile starting point. It starting point is the location of the player planet.
      */
     private int missilePointX = Constants.PLAYER_PLANET_X-120;
     private int missilePointY = Constants.PLAYER_PLANET_Y-160;
 
-    private final int deviationX = 65;
-    private final int deviationY = 35;
+    Text endGameText;
+    private VBox endGameBox;
+
+    private final int deviationX = 62;
+    private final int deviationY = 45;
 
     /**
      * When the missile reach the chosen enemy planet the animation ends.
@@ -54,16 +59,17 @@ public class BattlesSimulator {
     private int enemyPlanetDeviation = 150;
 
     private double unstableRotationRatio = 0;
-    /**
-     * Displays the battles window.
-     * This method render all the objects in it.
-     */
+
     private Engine engine;
 
     public BattlesSimulator(Engine engine){
         this.engine = engine;
     }
 
+    /**
+     * Displays the battles window.
+     * This method render all the objects in it.
+     */
     public void display(){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -74,7 +80,7 @@ public class BattlesSimulator {
         final ImageView background = new ImageView(Constants.BACKGROUND_IMAGE);
 
 
-        planets = new ArrayList<>(Arrays.asList(
+        this.planets = new ArrayList<>(Arrays.asList(
             new Planet(
                     Constants.PLAYER_PLANET_IMAGE,
                     Constants.PLAYER_PLANET_WIDTH,
@@ -107,14 +113,14 @@ public class BattlesSimulator {
                     Constants.ENEMY_ZAKROS_PLANET_X,
                     Constants.ENEMY_ZAKROS_PLANET_Y)));
 
-        this.missile = new Missile(
+        Missile missile = new Missile(
                 Constants.MISSILE_IMAGE,
                 Constants.MISSILE_WIDTH,
                 Constants.MISSILE_HEIGHT,
                 Constants.MISSILE_X,
                 Constants.MISSILE_Y);
 
-        this.missiles = new Group(this.missile.getImageView());
+        this.missiles = new Group(missile.getImageView());
         this.missiles.setEffect(new DropShadow(2, Color.color(1, 0, 0)));
 
         final Group foreground = new Group();
@@ -125,38 +131,25 @@ public class BattlesSimulator {
 
         foreground.setEffect(new DropShadow());
 
-        final Text baconLabel = new Text();
-        baconLabel.textProperty().bind(Bindings.concat("Bacon: ", 5));
-        baconLabel.setStyle("-fx-stroke: white;");
-        final Text soldiersLabel = new Text();
-        soldiersLabel.textProperty().bind(Bindings.concat("Soldiers: ", 5));
-        soldiersLabel.setStyle("-fx-stroke: white;");
-        final Text freedomLabel = new Text();
-        freedomLabel.textProperty().bind(Bindings.concat("Freedom: ", 5));
-        freedomLabel.setStyle("-fx-stroke: white;");
-        final Text moolahLabel = new Text();
-        moolahLabel.textProperty().bind(Bindings.concat("Moolah: ", 5));
-        moolahLabel.setStyle("-fx-stroke: white;");
-        final Text elapsedSecondsLabel = new Text();
-        elapsedSecondsLabel.textProperty().bind(Bindings.concat("Elapsed seconds: ", 5));
-        elapsedSecondsLabel.setStyle("-fx-stroke: white;");
+        this.endGameText = new Text();
+        this.endGameText.setFont(new Font(50));
+        this.endGameText.setStyle("-fx-stroke: red;");
 
-        /**
-         * it keeps all the player resources in the game.
-         */
-        final VBox itemsBox = VBoxBuilder.create()
-                .children(baconLabel, soldiersLabel, freedomLabel, moolahLabel, elapsedSecondsLabel)
-                .translateX(20)
-                .translateY(20)
+
+        this.endGameBox = VBoxBuilder.create()
+                .children(this.endGameText)
+                .translateX(270)
+                .translateY(170)
                 .build();
-        itemsBox.setStyle("-fx-background-color: black;");
+        this.endGameText.setVisible(false);
 
-        final Group root = new Group(background, foreground, this.missiles, itemsBox);
+        final Group root = new Group(background, foreground, this.missiles, this.endGameBox);
         this.missiles.setVisible(false);
         Scene scene = new Scene(root, Constants.BATTLE_WINDOW_WIDTH, Constants.BATTLE_WINDOW_HEIGHT);
 
         window.setScene(scene);
         scene.setOnMousePressed(e -> this.startAnimation(e.getX(), e.getY()));
+        //battleProcess();
         window.showAndWait();
     }
 
@@ -166,7 +159,7 @@ public class BattlesSimulator {
      * @param y coordinate of the enemy planet location.
      */
     private void startAnimation(double x, double y){
-        this.chosenPlanet = findPlanetByXY(x,y);
+        Planet chosenPlanet = findPlanetByXY(x, y);
 
         if (!missileAnimationEnded){
             this.missiles.setVisible(true);
@@ -185,10 +178,10 @@ public class BattlesSimulator {
             }
         }
         else{
-            this.setMissileRotation(this.chosenPlanet.getY());
-            this.setMissileMovement(this.chosenPlanet.getX(), this.chosenPlanet.getY());
+            this.setMissileRotation(chosenPlanet.getY());
+            this.setMissileMovement(chosenPlanet.getX(), chosenPlanet.getY());
 
-            if (this.missilePointX == this.chosenPlanet.getX()-this.enemyPlanetDeviation && this.missilePointY ==this.chosenPlanet.getY()-enemyPlanetDeviation){
+            if (this.missilePointX == chosenPlanet.getX()-this.enemyPlanetDeviation && this.missilePointY == chosenPlanet.getY()-enemyPlanetDeviation){
                 this.missilePointX = Constants.PLAYER_PLANET_X-120;
                 this.missilePointY = Constants.PLAYER_PLANET_Y-160;
                 this.missiles.setVisible(false);
@@ -204,7 +197,7 @@ public class BattlesSimulator {
                 .fromY(this.missilePointY)
                 .toY(this.missilePointY)
                 .duration(Duration.millis(0.1))
-                .onFinished(e -> this.startAnimation(x,y))
+                .onFinished(e -> this.startAnimation(x, y))
                 .build();
 
         this.missileAnimation.play();
@@ -264,7 +257,7 @@ public class BattlesSimulator {
                 .filter(planet -> Math.pow(
                         (x - (planet.getX() + this.deviationX)), 2)
                         + Math.pow((y - (planet.getY() + this.deviationY)), 2)
-                        <= Math.pow((planet.getWidth() / 2), 2)
+                        <= Math.pow((planet.getWidth() / 2)+5, 2)
                         && planet != this.planets.get(0))
                 .findFirst();
 
@@ -276,31 +269,100 @@ public class BattlesSimulator {
         }
     }
 
+    /**
+     * Process the battle
+     * Generates all planet resources by pseudo random number.
+     * The exponent is a random number with range [0.5 current resource; 1.25 of current resource]
+     * The precision is a random number with range [0.5 current resource; 1.5 of current resource]
+     */
     private void battleProcess(){
-        long enemyMoolah = engine.getMoolahAmount();
-
         int enemyBaconExponent = EnhancedRandom.nextInt(
-                (engine.getBaconAmount().getExponent() / 2),
-                engine.getBaconAmount().getExponent() + (engine.getBaconAmount().getExponent() / 2));
+                (this.engine.getBaconAmount().getExponent() / 2),
+                this.engine.getBaconAmount().getExponent() + (this.engine.getBaconAmount().getExponent() / 2));
         double enemyBaconPrecision = EnhancedRandom.nextDouble(
-                (engine.getBaconAmount().getPrecision() / 2),
-                engine.getBaconAmount().getPrecision() + (engine.getBaconAmount().getPrecision() / 2));
+                (this.engine.getBaconAmount().getPrecision() / 2),
+                this.engine.getBaconAmount().getPrecision() + (this.engine.getBaconAmount().getPrecision() / (2 + 2)));
 
         int enemyFreedomExponent = EnhancedRandom.nextInt(
-                (engine.getFreedomAmount().getExponent() / 2),
-                engine.getFreedomAmount().getExponent() + (engine.getFreedomAmount().getExponent() / 2));
+                (this.engine.getFreedomAmount().getExponent() / 2),
+                this.engine.getFreedomAmount().getExponent() + (this.engine.getFreedomAmount().getExponent() / 2));
         double enemyFreedomPrecision = EnhancedRandom.nextDouble(
-                (engine.getFreedomAmount().getPrecision() / 2),
-                engine.getFreedomAmount().getPrecision() + (engine.getFreedomAmount().getPrecision() / 2));
+                (this.engine.getFreedomAmount().getPrecision() / 2),
+                this.engine.getFreedomAmount().getPrecision() + (this.engine.getFreedomAmount().getPrecision() / (2 + 2)));
 
         int enemyDemocracyExponent = EnhancedRandom.nextInt(
-                (engine.getDemocracyAmount().getExponent() / 2),
-                engine.getDemocracyAmount().getExponent() + (engine.getDemocracyAmount().getExponent() / 2));
+                (this.engine.getDemocracyAmount().getExponent() / 2),
+                this.engine.getDemocracyAmount().getExponent() + (this.engine.getDemocracyAmount().getExponent() / 2));
         double enemyDemocracyPrecision = EnhancedRandom.nextDouble(
-                (engine.getDemocracyAmount().getPrecision() / 2),
-                engine.getDemocracyAmount().getPrecision() + (engine.getDemocracyAmount().getPrecision() / 2));
+                (this.engine.getDemocracyAmount().getPrecision() / 2),
+                this.engine.getDemocracyAmount().getPrecision() + (this.engine.getDemocracyAmount().getPrecision() / (2 + 2)));
 
+        long enemyMoolah = EnhancedRandom.nextLong((this.engine.getMoolahAmount() / 2), this.engine.getMoolahAmount() + (this.engine.getMoolahAmount() / 2));
+        HugeInteger enemyBaconAmounth = new HugeInteger(enemyBaconPrecision, enemyBaconExponent);
+        HugeInteger enemyFreedomAmounth = new HugeInteger(enemyFreedomPrecision, enemyFreedomExponent);
+        HugeInteger enemyDemocracyAmounth = new HugeInteger(enemyDemocracyPrecision, enemyDemocracyExponent);
 
+        Boolean baconContention = this.engine.getBaconAmount().compareTo(enemyBaconAmounth) == 1;
+        Boolean freedomContention = this.engine.getFreedomAmount().compareTo(enemyFreedomAmounth) == 1;
+        Boolean democracyContention = this.engine.getDemocracyAmount().compareTo(enemyDemocracyAmounth) == 1;
+        Boolean moolahContention = this.engine.getMoolahAmount() > enemyMoolah;
 
+        addBonusAmountIfPlayerWins(baconContention, freedomContention, democracyContention, moolahContention);
+
+        popUpGameEndText(baconContention, freedomContention, democracyContention, moolahContention);
+    }
+
+    /**
+     * If one of the booleans is true, you win, else lose.
+     * This method makes a VBox on the screen visible and adds some text on it.
+     * @param baconContention is a boolean which is true if the player resource is more than the resource of the enemy planet, else false.
+     * @param freedomContention is a boolean which is true if the player resource is more than the resource of the enemy planet, else false.
+     * @param democracyContention is a boolean which is true if the player resource is more than the resource of the enemy planet, else false.
+     * @param moolahContention is a boolean which is true if the player resource is more than the resource of the enemy planet, else false.
+     */
+    private void popUpGameEndText(Boolean baconContention, Boolean freedomContention, Boolean democracyContention, Boolean moolahContention) {
+        if (baconContention || freedomContention || democracyContention || moolahContention){
+            this.endGameText.textProperty().bind(Bindings.concat("YOU WIN"));
+            this.endGameText.setVisible(true);
+        }
+        else{
+            this.endGameText.textProperty().bind(Bindings.concat("YOU LOSE"));
+            this.endGameText.setVisible(true);
+        }
+    }
+
+    /**
+     * Every boolean which is true, adds bonus points to the current resource.
+     * @param baconContention is a boolean which is true if the player resource is more than the resource of the enemy planet, else false.
+     * @param freedomContention is a boolean which is true if the player resource is more than the resource of the enemy planet, else false.
+     * @param democracyContention is a boolean which is true if the player resource is more than the resource of the enemy planet, else false.
+     * @param moolahContention is a boolean which is true if the player resource is more than the resource of the enemy planet, else false.
+     */
+    private void addBonusAmountIfPlayerWins(Boolean baconContention, Boolean freedomContention, Boolean democracyContention, Boolean moolahContention) {
+        if (baconContention){
+            this.engine.setBaconAmount(calcNewResourceAmount(this.engine.getBaconAmount()));
+        }
+        if (freedomContention){
+            this.engine.setFreedomAmount(calcNewResourceAmount(this.engine.getFreedomAmount()));
+        }
+        if (democracyContention){
+            this.engine.setDemocracyAmount(calcNewResourceAmount(this.engine.getDemocracyAmount()));
+        }
+        if (moolahContention){
+            this.engine.setMoolahAmount(this.engine.getMoolahAmount() + (this.engine.getMoolahAmount() / 20));
+        }
+    }
+
+    /**
+     * This method increases the exponent by five.
+     * @param resourceAmount current resource amount which is needed to calculate the new resource amount.
+     * @return the new resource amount of points, after adding the bonus.
+     */
+    private HugeInteger calcNewResourceAmount (HugeInteger resourceAmount) {
+        int upgradeExponent = 5;
+        double currentPrecision = resourceAmount.getPrecision();
+        int currentExponent = resourceAmount.getExponent();
+        HugeInteger newAmount = new HugeInteger(currentPrecision,currentExponent + upgradeExponent);
+        return newAmount;
     }
 }

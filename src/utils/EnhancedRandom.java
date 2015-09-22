@@ -14,4 +14,9 @@ public class EnhancedRandom {
         int randomValue = start + (end - start) * random.nextInt();
         return randomValue;
     }
+
+    public static long nextLong(long start, long end){
+        long randomValue = start + (end - start) * random.nextLong();
+        return randomValue;
+    }
 }

@@ -1,5 +1,7 @@
 package application;
 
+import contracts.Engine;
+import controllers.EmpireEngine;
 import ui.BattlesSimulator;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -14,7 +16,7 @@ public class Controller {
     public MenuItem showUnits;
 
     public void startAction(ActionEvent actionEvent) {
-        startButton.setOnAction(event -> new BattlesSimulator().display());
+        startButton.setOnAction(event -> new BattlesSimulator(new EmpireEngine()).display());
     }
 
     public void startActionShowUnits(ActionEvent actionEvent) {
