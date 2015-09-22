@@ -1,4 +1,4 @@
-package ui;
+package UI;
 
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransitionBuilder;
@@ -14,8 +14,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import models.guiModels.Missile;
-import models.guiModels.Planet;
+import models.GUIModels.Missile;
+import models.GUIModels.Planet;
 import utils.Constants;
 import java.util.*;
 
