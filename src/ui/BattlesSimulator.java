@@ -149,7 +149,7 @@ public class BattlesSimulator {
 
         window.setScene(scene);
         scene.setOnMousePressed(e -> this.startAnimation(e.getX(), e.getY()));
-        //battleProcess();
+        battleProcess();
         window.showAndWait();
     }
 
