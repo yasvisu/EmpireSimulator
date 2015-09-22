@@ -13,6 +13,8 @@ public class Main extends Application {
 		try {
 			Parent parent = FXMLLoader.load(getClass().getResource("menu.fxml"));
 			primaryStage.setScene(new Scene(parent));
+			primaryStage.setOnCloseRequest(event -> primaryStage.close());
+
 			primaryStage.show();
 
 
