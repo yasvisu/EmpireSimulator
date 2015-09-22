@@ -19,6 +19,7 @@ public class EmpireEngine implements Engine {
     private UnitTree democracy;
     private long moolah;
     private long elapsedSeconds;
+	private boolean isRunning = false;
 
     public EmpireEngine() {
 		this.bacon = new EmpireUnitTree();
@@ -372,7 +373,6 @@ public class EmpireEngine implements Engine {
 	 * Sets the current Moolah (money) resource amount.
      * @param amount New resource amount to set.
 	 */
-
 	@Override
 	public void setMoolahAmount(long amount) {
         if (amount < 0) {
@@ -380,6 +380,26 @@ public class EmpireEngine implements Engine {
         }
 
         this.moolah = amount; }
+
+	/**
+	 * Initializes the engine and starts constantly updating its state.
+	 */
+	@Override
+	public void run() {
+		this.initialize();
+		this.isRunning = true;
+		while(this.isRunning) {
+			this.update();
+		}
+	}
+
+	/**
+	 * Stops the engine from running.
+	 */
+	@Override
+	public void stop() {
+		this.isRunning = false;
+	}
 
     /**
      * Returns the current resource for a given unit tree, where resource is at the bottom of the tree.

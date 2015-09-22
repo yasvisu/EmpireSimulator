@@ -110,4 +110,14 @@ public interface Engine {
      * @param amount New resource amount.
      */
     void setMoolahAmount(long amount);
+
+	/**
+	 * Initializes the engine and starts constantly updating its state.
+	 */
+	void run();
+
+	/**
+	 * Stops the engine from running.
+	 */
+	void stop();
 }
