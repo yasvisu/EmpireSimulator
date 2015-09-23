@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane fx:id="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller1Screen">
    <children>
       <BorderPane layoutX="228.0" layoutY="185.0" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -17,7 +18,7 @@
                         <Font size="58.0" />
                      </font>
                   </Label>
-                  <Label layoutX="311.0" layoutY="119.0" text="Game Options" textFill="#252020">
+                  <Label layoutX="311.0" layoutY="119.0" text="Game Options" textFill="#b51212">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -45,7 +46,7 @@
                <children>
                   <MenuButton fx:id="moreMenu" layoutX="16.0" layoutY="3.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="MORE">
                      <items>
-                        <MenuItem fx:id="upgrades" mnemonicParsing="false" text="Buy Upgrades" />
+                        <MenuItem fx:id="upgrades" mnemonicParsing="false" onAction="#buyUp" text="Buy Upgrades" />
                         <Menu mnemonicParsing="false" text="Unspecified Menu">
                           <items>
                             <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -58,4 +59,7 @@
          </left>
       </BorderPane>
    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </AnchorPane>

@@ -1,31 +1,35 @@
 package application;
 	
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
 public class Main extends Application {
+
+    public static  String menu1ID = "background";
+    public static String screen1File = "menu.fxml";
+    public static String menu2ID = "menu";
+    public static String screen2File = "gameView.fxml";
+    public static String menu3ID = "up";
+    public static String screen3File = "upgrades.fxml";
+
+
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent parent = FXMLLoader.load(getClass().getResource("menu.fxml"));
-			primaryStage.setScene(new Scene(parent));
-			primaryStage.setOnCloseRequest(event -> primaryStage.close());
+			ControllerScreens mainController = new ControllerScreens();
+            mainController.loadScreen(Main.menu1ID, Main.screen1File);
+            mainController.loadScreen(Main.menu2ID, Main.screen2File);
+            mainController.loadScreen(Main.menu3ID,Main.screen3File);
 
-			primaryStage.show();
-
-
-
-			//BorderPane root = new BorderPane();
-			//Button battleButtonSample = new Button("Go to battle simulator");
-			//battleButtonSample.setOnAction(e -> new BattlesSimulator().display());
-			//root.setCenter(battleButtonSample);
-
-			//Scene scene = new Scene(root,400,400);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            mainController.setScreen(Main.menu1ID);
+            Group group = new Group();
+            group.getChildren().addAll(mainController);
+            primaryStage.setScene(new Scene(group));
+            primaryStage.show();
 
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -22,8 +22,8 @@ public class AlertBox extends Main{
         Button noButton = new Button("No");
         noButton.setOnAction(event -> primaryStage.close());
 
-        VBox vBox = new VBox(20);
-        vBox.setMinHeight(300);
+        VBox vBox = new VBox(15);
+        vBox.setMinHeight(100);
         vBox.setMinWidth(200);
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(yesButton, noButton);
