@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 /**
  * Created by borislavivanov on 9/23/15.
  */
+@Deprecated
 public class Controller2ScreenGame implements Initializable, ControlledScreen {
 
     ControllerScreens controllerScreens;

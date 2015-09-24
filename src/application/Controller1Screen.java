@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 /**
  * Created by borislavivanov on 9/22/15.
  */
+@Deprecated
 public class Controller1Screen implements Initializable, ControlledScreen {
 
     public Button startButton;

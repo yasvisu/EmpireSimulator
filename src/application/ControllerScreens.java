@@ -17,6 +17,7 @@ import java.util.HashMap;
 /**
  * Created by borislavivanov on 9/23/15.
  */
+@Deprecated
 public class ControllerScreens extends StackPane {
     //Holds the screen to be displayed.
     HashMap<String, Node> screens = new HashMap<>();
