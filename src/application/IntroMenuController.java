@@ -63,17 +63,17 @@ public class IntroMenuController extends UIController{
 
     @FXML
     void IntroMenuNew_onAction(ActionEvent event) {
-	this.setLabelText(this.IntroMenuNew);
+	this.setLabelText("Not implemented: New.");
     }
 
     @FXML
     void IntroMenuLoad_onAction(ActionEvent event) {
-	this.setLabelText(this.IntroMenuLoad);
+	this.setLabelText("Not implemented: Load.");
     }
 
     @FXML
     void IntroMenuHighscores_onAction(ActionEvent event) {
-	this.setLabelText(this.IntroMenuHighscores);
+	this.setLabelText("Not implemented: Highscores.");
     }
 
     @FXML
@@ -89,7 +89,7 @@ public class IntroMenuController extends UIController{
 	assert IntroMenuClickLabel != null : "fx:id=\"IntroMenuAbout\" was not injected: check your FXML file 'IntroMenu.fxml'.";
     }
     
-    private void setLabelText(Control control){
-	this.IntroMenuClickLabel.setText(control.getId() + " clicked.");
+    private void setLabelText(String text){
+	this.IntroMenuClickLabel.setText(text);
     }
 }
