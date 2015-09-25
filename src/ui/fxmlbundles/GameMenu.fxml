@@ -5,27 +5,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane prefHeight="310.0" prefWidth="611.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ui.fxmlbundles.GameMenuController">
+<BorderPane prefHeight="310.0" prefWidth="611.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.fxmlbundles.GameMenuController">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Untitled Tab 1">
+          <Tab text="Bacon">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="161.0" prefWidth="137.0" />
             </content>
           </Tab>
-          <Tab text="Untitled Tab 2">
+          <Tab text="Freedom">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
-            <Tab text="Untitled Tab">
+            <Tab text="Democracy">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="Untitled Tab">
+            <Tab text="Moolah">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
@@ -34,8 +33,10 @@
       </TabPane>
    </center>
    <right>
-      <VBox alignment="CENTER" prefHeight="310.0" prefWidth="138.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="310.0" prefWidth="138.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
+            <Label fx:id="GameMenuClickLabel" text="Label" />
+            <Button fx:id="GameMenuSave" mnemonicParsing="false" onAction="#GameMenuSave_onAction" text="Save" />
             <Button fx:id="GameMenuMainMenu" mnemonicParsing="false" onAction="#GameMenuMainMenu_onAction" text="Main Menu" />
          </children>
       </VBox>
