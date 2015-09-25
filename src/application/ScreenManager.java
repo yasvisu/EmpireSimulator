@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -20,23 +21,60 @@ public class ScreenManager {
     public ScreenManager(Stage primaryStage) {
 	this.primaryStage = primaryStage;
 	this.menuBundleMap = new HashMap<String, FXMLBundle>();
-	this.loadScreenResources();
     }
-    
-    public void begin(){
-	this.setScene("IntroMenu");
+
+    public void begin() {
+	this.loadScreenResources();
+	this.primaryStage.setScene(new Scene(this.mainPane));
+	this.setLayout("IntroMenu");
+	this.primaryStage.show();
     }
 
     private void loadScreenResources() {
 	FXMLLoader pageLoader;
+	UIController currentController;
+	Node currentNode;
+
 	try {
+	    // MainPane
+	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.mainPaneFxml));
+	    this.mainPane = (BorderPane) pageLoader.load();
+	    currentController = pageLoader.getController();
+	    currentController.setScreenManager(this);
+
+	    this.menuBundleMap.put("MainPane", new FXMLBundle(mainPane, currentController));
+
 	    // IntroMenu
 	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.introMenuFxml));
-	    this.mainPane = (BorderPane) pageLoader.load();
-	    UIController currentController = pageLoader.getController();
-	    
-	    this.menuBundleMap.put("IntroMenu", new FXMLBundle(new Scene(mainPane), currentController));
+	    currentNode = pageLoader.load();
+	    currentController = pageLoader.getController();
+	    currentController.setScreenManager(this);
 
+	    this.menuBundleMap.put("IntroMenu", new FXMLBundle(currentNode, currentController));
+
+	    // AboutMenu
+	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.aboutMenuFxml));
+	    currentNode = pageLoader.load();
+	    currentController = pageLoader.getController();
+	    currentController.setScreenManager(this);
+
+	    this.menuBundleMap.put("AboutMenu", new FXMLBundle(currentNode, currentController));
+
+	    // CreditsMenu
+	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.creditsMenuFxml));
+	    currentNode = pageLoader.load();
+	    currentController = pageLoader.getController();
+	    currentController.setScreenManager(this);
+
+	    this.menuBundleMap.put("CreditsMenu", new FXMLBundle(currentNode, currentController));
+	    
+	    // OptionsMenu
+	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.optionsMenuFxml));
+	    currentNode = pageLoader.load();
+	    currentController = pageLoader.getController();
+	    currentController.setScreenManager(this);
+
+	    this.menuBundleMap.put("OptionsMenu", new FXMLBundle(currentNode, currentController));
 	    // Other menus
 	    // ...
 
@@ -45,11 +83,11 @@ public class ScreenManager {
 	}
     }
 
-    private void setScene(String sceneName) throws IllegalArgumentException {
-	if (!this.menuBundleMap.containsKey(sceneName)) {
-	    throw new IllegalArgumentException("No such scene");
+    public void setLayout(String nodeName) throws IllegalArgumentException {
+	if (!this.menuBundleMap.containsKey(nodeName)) {
+	    throw new IllegalArgumentException("No such scene: " + nodeName);
 	}
 
-	this.primaryStage.setScene(menuBundleMap.get(sceneName).getScene());
+	this.mainPane.setCenter(menuBundleMap.get(nodeName).getNode());
     }
 }

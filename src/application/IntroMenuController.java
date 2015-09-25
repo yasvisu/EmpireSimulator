@@ -48,17 +48,17 @@ public class IntroMenuController extends UIController{
 
     @FXML
     void IntroMenuOptions_onAction(ActionEvent event) {
-	this.setLabelText(this.IntroMenuOptions);
+	this.getScreenManager().setLayout("OptionsMenu");
     }
 
     @FXML
     void IntroMenuCredits_onAction(ActionEvent event) {
-	this.setLabelText(this.IntroMenuCredits);
+	this.getScreenManager().setLayout("CreditsMenu");
     }
 
     @FXML
     void IntroMenuAbout_onAction(ActionEvent event) {
-	this.setLabelText(this.IntroMenuAbout);
+	this.getScreenManager().setLayout("AboutMenu");
     }
 
     @FXML

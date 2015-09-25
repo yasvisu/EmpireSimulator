@@ -1,27 +1,27 @@
 package models.guiModels;
 
 import application.UIController;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 
 public class FXMLBundle {
-    public Scene scene;
-    public UIController controller;
+    private Node node;
+    private UIController controller;
 
-    public FXMLBundle(Scene scene, UIController controller) {
-	this.setScene(scene);
+    public FXMLBundle(Node node, UIController controller) {
+	this.setNode(node);
 	this.setController(controller);
     }
 
-    public Scene getScene() {
-	return this.scene;
+    public Node getNode() {
+	return this.node;
     }
 
-    private void setScene(Scene scene) {
-	if (scene == null) {
-	    throw new IllegalArgumentException("Scene cannot be null.");
+    private void setNode(Node node) {
+	if (node == null) {
+	    throw new IllegalArgumentException("Node cannot be null.");
 	}
 
-	this.scene = scene;
+	this.node = node;
     }
 
     public UIController getController() {
