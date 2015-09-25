@@ -12,4 +12,6 @@ public class GUIConstants {
 
     public static final String optionsMenuFxml = "OptionsMenu.fxml";
 
+    public static final String gameMenuFxml = "GameMenu.fxml";
+
 }

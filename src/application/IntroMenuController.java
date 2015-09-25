@@ -62,7 +62,7 @@ public class IntroMenuController extends UIController{
 
     @FXML
     void IntroMenuNew_onAction(ActionEvent event) {
-	this.setLabelText("Not implemented: New.");
+	this.getScreenManager().setLayout("GameMenu");
     }
 
     @FXML

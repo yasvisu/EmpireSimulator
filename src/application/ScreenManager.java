@@ -75,6 +75,15 @@ public class ScreenManager {
 	    currentController.setScreenManager(this);
 
 	    this.menuBundleMap.put("OptionsMenu", new FXMLBundle(currentNode, currentController));
+	    
+	    // GameMenu
+	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.gameMenuFxml));
+	    currentNode = pageLoader.load();
+	    currentController = pageLoader.getController();
+	    currentController.setScreenManager(this);
+
+	    this.menuBundleMap.put("GameMenu", new FXMLBundle(currentNode, currentController));
+	    
 	    // Other menus
 	    // ...
 
