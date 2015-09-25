@@ -1,7 +1,7 @@
 package models.guiModels;
 
-import application.UIController;
 import javafx.scene.Node;
+import ui.fxmlbundles.UIController;
 
 public class FXMLBundle {
     private Node node;

@@ -1,4 +1,4 @@
-package application;
+package ui.fxmlbundles;
 
 import java.net.URL;
 import java.util.ResourceBundle;

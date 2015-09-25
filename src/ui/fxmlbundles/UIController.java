@@ -1,4 +1,6 @@
-package application;
+package ui.fxmlbundles;
+
+import application.ScreenManager;
 
 public abstract class UIController {
     private ScreenManager screenManager;
