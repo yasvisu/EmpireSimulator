@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.fxmlbundles.AboutMenuController">
+   <center>
+      <Text fx:id="AboutMenuText" strokeType="OUTSIDE" strokeWidth="0.0" text="About menu." BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Button fx:id="AboutMenuMainMenu" mnemonicParsing="false" onAction="#AboutMenuMainMenu_onAction" text="Main Menu" BorderPane.alignment="CENTER" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

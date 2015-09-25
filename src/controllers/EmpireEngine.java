@@ -10,13 +10,13 @@ import models.HugeInteger;
 import java.util.ArrayList;
 
 /**
- * Base engine class, containint the basic functionality, als keeping the player data and unit trees.
+ * Base engine class, containing the basic game functionality, also keeping the player data and unit trees.
  */
 public class EmpireEngine implements Engine {
 
-    private UnitTree bacon;
-    private UnitTree freedom;
-    private UnitTree democracy;
+    private EmpireUnitTree bacon;
+    private EmpireUnitTree freedom;
+    private EmpireUnitTree democracy;
     private long moolah;
     private long elapsedSeconds;
 	private boolean isRunning = false;
@@ -29,7 +29,74 @@ public class EmpireEngine implements Engine {
 		this.elapsedSeconds = 0;
     }
 
-    /**
+	/**
+	 * Initializes the engine state.
+	 */
+	public void initialize() {
+		Unit bacon = new EmpireUnit(40, 1, "Bacon", "bacon flavor text",
+				new HugeInteger(0, 0), new HugeInteger(0, 0), new HugeInteger(0, 0)) {
+			@Override
+			public int getUpgradeLevel(UpgradeTypes upgradeType) {
+				return 0;
+			}
+
+			@Override
+			public void setUpgradeLevel(UpgradeTypes upgradeType, int level) {
+
+			}
+
+			@Override
+			public int getSpawnCount() {
+				return 0;
+			}
+		};
+        this.bacon.setRootUnit(bacon);
+		this.bacon.addDescendantsRecursively(bacon, new ArrayList<>());
+
+		Unit senator = new EmpireUnit(10, 1, "Senator", "senator flavor text",
+				new HugeInteger(10, 0), new HugeInteger(0, 0), new HugeInteger(0, 0)) {
+			@Override
+			public int getUpgradeLevel(UpgradeTypes upgradeType) {
+				return 0;
+			}
+
+			@Override
+			public void setUpgradeLevel(UpgradeTypes upgradeType, int level) {
+
+			}
+
+			@Override
+			public int getSpawnCount() {
+				return 0;
+			}
+		};
+        this.democracy.setRootUnit(senator);
+		this.democracy.addDescendantsRecursively(senator, new ArrayList<>());
+
+        Unit soldier = new EmpireUnit(10, 1, "Soldier", "soldier flavor text",
+                new HugeInteger(10, 0), new HugeInteger(0, 0), new HugeInteger(0, 0)) {
+            @Override
+            public int getUpgradeLevel(UpgradeTypes upgradeType) {
+                return 0;
+            }
+
+            @Override
+            public void setUpgradeLevel(UpgradeTypes upgradeType, int level) {
+
+            }
+
+            @Override
+            public int getSpawnCount() {
+                return 0;
+            }
+        };
+        this.freedom.setRootUnit(soldier);
+        this.freedom.addDescendantsRecursively(soldier, new ArrayList<>());
+
+		this.moolah += 10;
+	}
+
+	/**
      * Update method parses through all unit trees and updates all unit data, increases descendants with output
      * quantities.
      */
@@ -58,10 +125,10 @@ public class EmpireEngine implements Engine {
 			}
 
 			HugeInteger currentDemocracy = this.getResourceAmount(this.democracy);
-			Unit senator = this.democracy.getRootUnit(); // where is the Senator in the tree?
+			Unit senator = this.democracy.getRootUnit();
 			HugeInteger democracyIncrease = new HugeInteger(
 					senator.getOutputProduction().getPrecision() * deltaTSeconds % 10,
-					(int) (senator.getOutputProduction().getExponent() * deltaTSeconds / (deltaTSeconds % 10)));
+					(int) (senator.getOutputProduction().getExponent() * deltaTSeconds / (1 + deltaTSeconds % 10)));
 			currentDemocracy.setPrecision(currentDemocracy.getPrecision() + democracyIncrease.getPrecision());
 			currentDemocracy.setExponent(currentDemocracy.getExponent() + democracyIncrease.getExponent());
 		}
@@ -261,51 +328,6 @@ public class EmpireEngine implements Engine {
 		score += Math.sqrt(this.getResourceAmount(this.democracy).getExponent());
 		score += Math.sqrt(this.getResourceAmount(this.freedom).getExponent());
 		return score;
-    }
-
-    /**
-     * Initializes the engine state.
-     */
-    public void initialize() {
-        Unit bacon = new EmpireUnit(40, 1, "Bacon", "bacon flavor text",
-                new HugeInteger(0, 0), new HugeInteger(0, 0), new HugeInteger(0, 0)) {
-            @Override
-            public int getUpgradeLevel(UpgradeTypes upgradeType) {
-                return 0;
-            }
-
-            @Override
-            public void setUpgradeLevel(UpgradeTypes upgradeType, int level) {
-
-            }
-
-            @Override
-            public int getSpawnCount() {
-                return 0;
-            }
-        };
-        this.bacon.addDescendantsRecursively(bacon, new ArrayList<>());
-
-        Unit soldier = new EmpireUnit(10, 1, "Soldier", "soldier flavor text",
-                new HugeInteger(10, 0), new HugeInteger(0, 0), new HugeInteger(0, 0)) {
-            @Override
-            public int getUpgradeLevel(UpgradeTypes upgradeType) {
-                return 0;
-            }
-
-            @Override
-            public void setUpgradeLevel(UpgradeTypes upgradeType, int level) {
-
-            }
-
-            @Override
-            public int getSpawnCount() {
-                return 0;
-            }
-        };
-        this.democracy.addDescendantsRecursively(soldier, new ArrayList<>());
-
-        this.moolah += 10;
     }
 
     /**

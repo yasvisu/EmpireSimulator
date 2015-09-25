@@ -12,8 +12,6 @@ public class Main extends Application {
     public static String menu3ID = "up";
     public static String screen3File = "upgrades.fxml";
 
-    
-
     @Override
     public void start(Stage primaryStage) {
 	try {
