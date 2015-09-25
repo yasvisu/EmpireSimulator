@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+@Deprecated
 public class AlertBox extends Main{
 
     public static void display() {
