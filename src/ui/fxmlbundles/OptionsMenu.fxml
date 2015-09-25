@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OptionsMenuController">
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.fxmlbundles.OptionsMenuController">
    <center>
       <Text fx:id="OptionsMenuText" strokeType="OUTSIDE" strokeWidth="0.0" text="Options menu." BorderPane.alignment="CENTER" />
    </center>

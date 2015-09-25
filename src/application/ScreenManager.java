@@ -38,7 +38,7 @@ public class ScreenManager {
 
 	try {
 	    // MainPane
-	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.mainPaneFxml));
+	    pageLoader = new FXMLLoader(UIController.class.getResource(GUIConstants.mainPaneFxml));
 	    this.mainPane = (BorderPane) pageLoader.load();
 	    currentController = pageLoader.getController();
 	    currentController.setScreenManager(this);
@@ -46,7 +46,7 @@ public class ScreenManager {
 	    this.menuBundleMap.put("MainPane", new FXMLBundle(mainPane, currentController));
 
 	    // IntroMenu
-	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.introMenuFxml));
+	    pageLoader = new FXMLLoader(UIController.class.getResource(GUIConstants.introMenuFxml));
 	    currentNode = pageLoader.load();
 	    currentController = pageLoader.getController();
 	    currentController.setScreenManager(this);
@@ -54,7 +54,7 @@ public class ScreenManager {
 	    this.menuBundleMap.put("IntroMenu", new FXMLBundle(currentNode, currentController));
 
 	    // AboutMenu
-	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.aboutMenuFxml));
+	    pageLoader = new FXMLLoader(UIController.class.getResource(GUIConstants.aboutMenuFxml));
 	    currentNode = pageLoader.load();
 	    currentController = pageLoader.getController();
 	    currentController.setScreenManager(this);
@@ -62,7 +62,7 @@ public class ScreenManager {
 	    this.menuBundleMap.put("AboutMenu", new FXMLBundle(currentNode, currentController));
 
 	    // CreditsMenu
-	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.creditsMenuFxml));
+	    pageLoader = new FXMLLoader(UIController.class.getResource(GUIConstants.creditsMenuFxml));
 	    currentNode = pageLoader.load();
 	    currentController = pageLoader.getController();
 	    currentController.setScreenManager(this);
@@ -70,7 +70,7 @@ public class ScreenManager {
 	    this.menuBundleMap.put("CreditsMenu", new FXMLBundle(currentNode, currentController));
 	    
 	    // OptionsMenu
-	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.optionsMenuFxml));
+	    pageLoader = new FXMLLoader(UIController.class.getResource(GUIConstants.optionsMenuFxml));
 	    currentNode = pageLoader.load();
 	    currentController = pageLoader.getController();
 	    currentController.setScreenManager(this);
@@ -78,7 +78,7 @@ public class ScreenManager {
 	    this.menuBundleMap.put("OptionsMenu", new FXMLBundle(currentNode, currentController));
 	    
 	    // GameMenu
-	    pageLoader = new FXMLLoader(Main.class.getResource(GUIConstants.gameMenuFxml));
+	    pageLoader = new FXMLLoader(UIController.class.getResource(GUIConstants.gameMenuFxml));
 	    currentNode = pageLoader.load();
 	    currentController = pageLoader.getController();
 	    currentController.setScreenManager(this);
